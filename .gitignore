@@ -15,6 +15,7 @@ downloads/
 eggs/
 .eggs/
 lib/
+!flutter_code/guidance_app/lib/
 !imagesecurity/lib/
 lib64/
 parts/
