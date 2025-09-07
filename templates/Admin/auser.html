@@ -1,0 +1,125 @@
+{% extends "base.html" %}
+{% block content %}
+<style>
+    /* Table styling */
+    table.table-bordered th,
+    table.table-bordered td {
+        border: 1px solid #2c2c2c !important;
+    }
+
+    table.table-bordered {
+        border: 1px solid #2c2c2c !important;
+    }
+
+    table th, table td {
+        padding: 12px;
+        text-align: center;
+        vertical-align: middle;
+    }
+
+    /* Scrollable content between header & footer */
+    .scrollable-content {
+        padding-top: 100px;   /* below header */
+        padding-bottom: 60px; /* above footer */
+        min-height: calc(100vh - 160px);
+        overflow-y: auto;
+    }
+
+    /* Hide scrollbar but keep scrolling */
+    .scrollable-content::-webkit-scrollbar {
+        display: none;
+    }
+    .scrollable-content {
+        -ms-overflow-style: none;  /* IE/Edge */
+        scrollbar-width: none;     /* Firefox */
+    }
+
+    /* User images */
+    .user-img {
+        border-radius: 50%;
+        object-fit: cover;
+    }
+</style>
+
+<section class="hero-section" id="section_1">
+    <div class="section-overlay"></div>
+
+    <!-- Top SVG Wave -->
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+        <path fill="#3D405B" fill-opacity="1"
+              d="M0,224L34.3,192C68.6,160,137,96,206,90.7C274.3,85,343,139,411,144C480,149,549,107,
+              617,122.7C685.7,139,754,213,823,240C891.4,267,960,245,1029,224C1097.1,203,
+              1166,181,1234,160C1302.9,139,1371,117,1406,106.7L1440,96L1440,0L0,0Z">
+        </path>
+    </svg>
+
+    <div class="scrollable-content">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-12">
+                    <div class="bg-white p-5 rounded shadow-lg">
+                        <h2 class="mb-4 text-center">Registered Users</h2>
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped align-middle">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Name</th>
+                                        <th>Gender</th>
+                                        <th>Place</th>
+                                        <th>Post</th>
+                                        <th>Pin</th>
+                                        <th>Phone</th>
+                                        <th>Email</th>
+                                        <th>Image</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for i in o %}
+                                    <tr>
+                                        <td>{{ i.id }}</td>
+                                        <td>{{ i.name }}</td>
+                                        <td>{{ i.gender }}</td>
+                                        <td>{{ i.place }}</td>
+                                        <td>{{ i.post }}</td>
+                                        <td>{{ i.pin }}</td>
+                                        <td>{{ i.phone }}</td>
+                                        <td>{{ i.email }}</td>
+                                        <td>
+                                            {% if i.image %}
+                                                <img src="/static/media/{{i.image}}" alt="User Image"
+                                                     class="user-img" width="50" height="50">
+                                            {% else %}
+                                                No Image
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            {% if i.status == 'accepted' %}
+    <p>{{ i.status }}</p>
+{% else %}
+    <a href="/auseracc/{{ i.id }}" class="btn btn-success btn-sm">Accept</a>
+{% endif %}
+
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom SVG Wave -->
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+        <path fill="#ffffff" fill-opacity="1"
+              d="M0,224L34.3,192C68.6,160,137,96,206,90.7C274.3,85,343,139,411,144C480,149,549,107,
+              617,122.7C685.7,139,754,213,823,240C891.4,267,960,245,1029,224C1097.1,203,
+              1166,181,1234,160C1302.9,139,1371,117,1406,106.7L1440,96L1440,320L0,320Z">
+        </path>
+    </svg>
+</section>
+{% endblock %}

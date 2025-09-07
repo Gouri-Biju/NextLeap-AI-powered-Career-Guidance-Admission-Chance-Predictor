@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="description" content="Admin Panel for CareerQuest – College Admission Guidance System">
+    <meta name="author" content="">
+
+    <title>CareerQuest – Admin Dashboard</title>
+
+    <!-- CSS FILES -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/css/bootstrap-icons.css" rel="stylesheet">
+    <link href="/static/css/templatemo-tiya-golf-club.css" rel="stylesheet">
+
+    <style>
+body {
+    overflow-y: auto;             /* only show scroll when necessary */
+    -ms-overflow-style: none;     /* IE/Edge */
+    scrollbar-width: none;        /* Firefox */
+}
+
+body::-webkit-scrollbar {         /* Chrome, Safari */
+    display: none;
+}
+
+    .site-footer {
+        margin-top: 60px; /* creates space above footer */
+
+        background: linear-gradient(135deg, #1f1c2c, #928dab); /* gradient background */
+        color: #fff;
+        position: relative;
+        overflow: hidden;
+        padding: 50px 0 20px;
+        text-align: center;
+    }
+
+    /* Wave effect on top of footer */
+    .site-footer::before {
+        content: "";
+        position: absolute;
+        top: -60px;
+        left: 0;
+        width: 100%;
+        height: 60px;
+        background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'><path fill='%23ffffff' fill-opacity='1' d='M0,160L60,170.7C120,181,240,203,360,202.7C480,203,600,181,720,170.7C840,160,960,160,1080,181.3C1200,203,1320,245,1380,266.7L1440,288L1440,0L1380,0C1320,0,1200,0,1080,0C960,0,840,0,720,0C600,0,480,0,360,0C240,0,120,0,60,0L0,0Z'></path></svg>") no-repeat;
+        background-size: cover;
+    }
+
+    /* Footer content */
+    .footer-container {
+        max-width: 1200px;
+        margin: auto;
+        padding: 0 20px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 30px;
+    }
+
+    .footer-col {
+        flex: 1 1 250px;
+    }
+
+    .footer-col h5 {
+        font-weight: 700;
+        margin-bottom: 20px;
+        color: #ffd369;
+    }
+
+    .footer-col p, .footer-col a {
+        font-size: 15px;
+        line-height: 1.8;
+        color: #ddd;
+        text-decoration: none;
+    }
+
+    .footer-col a:hover {
+        color: #ffd369;
+    }
+
+    /* Social links */
+    .footer-social {
+        margin-top: 20px;
+    }
+
+    .footer-social a {
+        display: inline-block;
+        margin: 0 10px;
+        width: 40px;
+        height: 40px;
+        background: rgba(255,255,255,0.1);
+        color: white;
+        border-radius: 50%;
+        line-height: 40px;
+        font-size: 18px;
+        transition: all 0.3s ease;
+    }
+
+    .footer-social a:hover {
+        background: #ffd369;
+        color: #1f1c2c;
+        transform: translateY(-3px);
+    }
+
+    /* Footer bottom */
+    .footer-bottom {
+        border-top: 1px solid rgba(255,255,255,0.2);
+        margin-top: 30px;
+        padding-top: 15px;
+        font-size: 14px;
+        color: #bbb;
+    }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <!-- Navbar -->
+<nav class="navbar navbar-expand-lg">
+  <div class="container-fluid"> <!-- changed from .container to .container-fluid for full-width control -->
+    
+    <!-- Brand -->
+    <a class="navbar-brand d-flex align-items-center" href="/adminhome" style="min-width:220px;"> 
+      <img src="/static/images/logo.png" class="navbar-brand-image img-fluid" alt="CareerQuest Logo" style="max-height:40px;">
+      <span class="navbar-brand-text ms-2">
+        CareerQuest
+        <small class="d-block">Admin Panel</small>
+      </span>
+    </a>
+
+    <!-- Toggler -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Nav Content -->
+    <div class="collapse navbar-collapse" id="navbarNav">
+      
+      <!-- Nav links (always start after brand) -->
+      <ul class="navbar-nav ms-4"> <!-- ms-4 adds space after logo -->
+        <li class="nav-item"><a class="nav-link" href="/adminhome">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="/acollege">College</a></li>
+        <li class="nav-item"><a class="nav-link" href="/acourse">Course</a></li>
+        <li class="nav-item"><a class="nav-link" href="/arequest">Course Requests</a></li>
+        <li class="nav-item"><a class="nav-link" href="/adepartments">Departments</a></li>
+        <li class="nav-item"><a class="nav-link" href="/aarticles">Articles</a></li>
+
+          <li class="nav-item">
+    <a class="nav-link" href="/cdataset">Dataset</a>
+</li>
+        <li class="nav-item"><a class="nav-link" href="/auser">Students</a></li>
+        <li class="nav-item"><a class="nav-link" href="/acomplaint">Complaints</a></li>
+        <li class="nav-item"><a class="nav-link" href="/anotification">Notification</a></li>
+      </ul>
+
+      <!-- Right side buttons -->
+      <div class="ms-auto d-flex align-items-center gap-3">
+        <a class="nav-link logout-btn d-flex align-items-center gap-2" href="/" title="Logout">
+          <i class="bi bi-box-arrow-right fs-5"></i> <span>Logout</span>
+        </a>
+        <a class="btn about-icon-btn" data-bs-toggle="offcanvas" href="#offcanvasExample" title="About">
+          <i class="bi bi-info-circle-fill"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+    <!-- Offcanvas Info -->
+    <div class="offcanvas offcanvas-end" id="offcanvasExample">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title text-primary">About This System (Admin)</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+        </div>
+        <div class="offcanvas-body">
+            <h6 class="fw-bold">🎓 Career Guidance & College Admission Chances Prediction Platform</h6>
+            <p>Welcome to the Admin Panel of a smart, AI-driven platform designed to assist students, parents, and colleges.</p>
+            <h6 class="fw-bold text-secondary">🔍 What the System Does:</h6>
+            <ul>
+                <li>Chatbot-based assessments to understand student interests.</li>
+                <li>Recommends suitable courses, colleges, and careers.</li>
+                <li>Predicts admission chances using historical data.</li>
+                <li>Facilitates communication between students, colleges, and parents.</li>
+            </ul>
+            <h6 class="fw-bold text-secondary">🛠️ Admin Role:</h6>
+            <ul>
+                <li><strong>Verify & Approve:</strong> Manage registrations.</li>
+                <li><strong>Manage Academic Data:</strong> Departments, Courses, Admissions.</li>
+                <li><strong>Moderate Content:</strong> Approve articles, review complaints.</li>
+                <li><strong>Send Notifications:</strong> Update users.</li>
+                <li><strong>Block Access:</strong> Restrict non-compliant listings.</li>
+            </ul>
+            <div class="alert alert-info mt-3">
+                <strong>📌 Tip:</strong> Review new course requests regularly.
+            </div>
+        </div>
+    </div>
+
+    <!-- Scrollable Content -->
+    <main>
+        <div class="content-wrapper">
+            
+            {% block content %}{% endblock %}
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white pt-5 pb-4">
+        <div class="container text-md-start">
+            <div class="row">
+                <div class="col-lg-6 col-12 me-auto mb-4">
+                    <a class="navbar-brand d-flex align-items-center text-white mb-3" href="/">
+                        <i class="fas fa-compass fa-lg me-2"></i>
+                        <span class="h5 mb-0">Career Navigator</span>
+                    </a>
+                    <p>A smart guidance system helping students choose the right course and college.</p>
+                </div>
+                <div class="col-md-4 col-lg-4 col-xl-3 mx-auto mb-4">
+                    <h6 class="text-uppercase fw-bold mb-4">Contact</h6>
+                    <p><i class="fas fa-home me-3"></i> Kerala, India</p>
+                    <p><i class="fas fa-envelope me-3"></i> support@careernav.com</p>
+                    <p><i class="fas fa-phone me-3"></i> +91 98765 43210</p>
+                </div>
+            </div>
+            <hr class="my-3 text-white-50" />
+            <div class="text-center text-muted">
+                © 2025 <strong>Career Navigator</strong>. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- JS -->
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/bootstrap.bundle.min.js"></script>
+    <script src="/static/js/jquery.sticky.js"></script>
+    <script src="/static/js/click-scroll.js"></script>
+    <script src="/static/js/animated-headline.js"></script>
+    <script src="/static/js/modernizr.js"></script>
+    <script src="/static/js/custom.js"></script>
+</body>
+</html>

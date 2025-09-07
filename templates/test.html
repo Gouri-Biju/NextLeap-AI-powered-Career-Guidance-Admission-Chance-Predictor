@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="description" content="Admin Panel for CareerQuest – College Admission Guidance System">
+    <meta name="author" content="">
+
+    <title>CareerQuest – Admin Dashboard</title>
+
+    <!-- CSS FILES -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/css/bootstrap-icons.css" rel="stylesheet">
+    <link href="/static/css/templatemo-tiya-golf-club.css" rel="stylesheet">
+
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+        body {
+            display: flex;
+            flex-direction: column;
+        }
+        main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .content-wrapper {
+            flex: 1;
+            overflow-y: auto;
+            padding: 0;   /* ✅ removed all padding */
+            margin: 0;    /* ✅ removed all margin */
+        }
+        footer {
+            margin-top: auto;
+        }
+        .logout-btn {
+            background: linear-gradient(to right, #ff4b2b, #ff416c);
+            color: white !important;
+            padding: 8px 18px;
+            border-radius: 50px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(255, 65, 108, 0.3);
+            text-decoration: none;
+        }
+        .logout-btn:hover {
+            background: linear-gradient(to right, #ff416c, #ff4b2b);
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(255, 65, 108, 0.45);
+        }
+        .logout-btn i {
+            transition: transform 0.3s ease;
+        }
+        .logout-btn:hover i {
+            transform: rotate(-90deg);
+        }
+        .about-icon-btn {
+            background: linear-gradient(to right, #00b4db, #0083b0);
+            color: white;
+            padding: 8px;
+            border: none;
+            border-radius: 50%;
+            font-size: 18px;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 8px rgba(0, 132, 176, 0.3);
+        }
+        .about-icon-btn:hover {
+            background: linear-gradient(to right, #0083b0, #00b4db);
+            transform: translateY(-1px);
+            box-shadow: 0 5px 12px rgba(0, 132, 176, 0.45);
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <!-- Navbar -->
+<nav class="navbar navbar-expand-lg">
+  <div class="container-fluid"> <!-- changed from .container to .container-fluid for full-width control -->
+    
+    <!-- Brand -->
+    <a class="navbar-brand d-flex align-items-center" href="/adminhome" style="min-width:220px;"> 
+      <img src="/static/images/logo.png" class="navbar-brand-image img-fluid" alt="CareerQuest Logo" style="max-height:40px;">
+      <span class="navbar-brand-text ms-2">
+        CareerQuest
+        <small class="d-block">Admin Panel</small>
+      </span>
+    </a>
+
+    <!-- Toggler -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Nav Content -->
+    <div class="collapse navbar-collapse" id="navbarNav">
+      
+      <!-- Nav links (always start after brand) -->
+      <ul class="navbar-nav ms-4"> <!-- ms-4 adds space after logo -->
+        <li class="nav-item"><a class="nav-link" href="/adminhome">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="/acollege">College</a></li>
+        <li class="nav-item"><a class="nav-link" href="/acourse">Course</a></li>
+        <li class="nav-item"><a class="nav-link" href="/arequest">Course Requests</a></li>
+        <li class="nav-item"><a class="nav-link" href="/adepartments">Departments</a></li>
+        <li class="nav-item"><a class="nav-link" href="/aarticles">Articles</a></li>
+        <li class="nav-item"><a class="nav-link" href="/auser">Students</a></li>
+        <li class="nav-item"><a class="nav-link" href="/acomplaint">Complaints</a></li>
+        <li class="nav-item"><a class="nav-link" href="/anotification">Notification</a></li>
+      </ul>
+
+      <!-- Right side buttons -->
+      <div class="ms-auto d-flex align-items-center gap-3">
+        <a class="nav-link logout-btn d-flex align-items-center gap-2" href="/" title="Logout">
+          <i class="bi bi-box-arrow-right fs-5"></i> <span>Logout</span>
+        </a>
+        <a class="btn about-icon-btn" data-bs-toggle="offcanvas" href="#offcanvasExample" title="About">
+          <i class="bi bi-info-circle-fill"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+    <!-- Offcanvas Info -->
+    <div class="offcanvas offcanvas-end" id="offcanvasExample">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title text-primary">About This System (Admin)</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+        </div>
+        <div class="offcanvas-body">
+            <h6 class="fw-bold">🎓 Career Guidance & College Admission Chances Prediction Platform</h6>
+            <p>Welcome to the Admin Panel of a smart, AI-driven platform designed to assist students, parents, and colleges.</p>
+            <h6 class="fw-bold text-secondary">🔍 What the System Does:</h6>
+            <ul>
+                <li>Chatbot-based assessments to understand student interests.</li>
+                <li>Recommends suitable courses, colleges, and careers.</li>
+                <li>Predicts admission chances using historical data.</li>
+                <li>Facilitates communication between students, colleges, and parents.</li>
+            </ul>
+            <h6 class="fw-bold text-secondary">🛠️ Admin Role:</h6>
+            <ul>
+                <li><strong>Verify & Approve:</strong> Manage registrations.</li>
+                <li><strong>Manage Academic Data:</strong> Departments, Courses, Admissions.</li>
+                <li><strong>Moderate Content:</strong> Approve articles, review complaints.</li>
+                <li><strong>Send Notifications:</strong> Update users.</li>
+                <li><strong>Block Access:</strong> Restrict non-compliant listings.</li>
+            </ul>
+            <div class="alert alert-info mt-3">
+                <strong>📌 Tip:</strong> Review new course requests regularly.
+            </div>
+        </div>
+    </div>
+
+    <!-- Scrollable Content -->
+    <main>
+        <div class="content-wrapper">
+            
+            {% block content %}{% endblock %}
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white pt-5 pb-4">
+        <div class="container text-md-start">
+            <div class="row">
+                <div class="col-lg-6 col-12 me-auto mb-4">
+                    <a class="navbar-brand d-flex align-items-center text-white mb-3" href="/">
+                        <i class="fas fa-compass fa-lg me-2"></i>
+                        <span class="h5 mb-0">Career Navigator</span>
+                    </a>
+                    <p>A smart guidance system helping students choose the right course and college.</p>
+                </div>
+                <div class="col-md-4 col-lg-4 col-xl-3 mx-auto mb-4">
+                    <h6 class="text-uppercase fw-bold mb-4">Contact</h6>
+                    <p><i class="fas fa-home me-3"></i> Kerala, India</p>
+                    <p><i class="fas fa-envelope me-3"></i> support@careernav.com</p>
+                    <p><i class="fas fa-phone me-3"></i> +91 98765 43210</p>
+                </div>
+            </div>
+            <hr class="my-3 text-white-50" />
+            <div class="text-center text-muted">
+                © 2025 <strong>Career Navigator</strong>. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- JS -->
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/bootstrap.bundle.min.js"></script>
+    <script src="/static/js/jquery.sticky.js"></script>
+    <script src="/static/js/click-scroll.js"></script>
+    <script src="/static/js/animated-headline.js"></script>
+    <script src="/static/js/modernizr.js"></script>
+    <script src="/static/js/custom.js"></script>
+</body>
+</html>

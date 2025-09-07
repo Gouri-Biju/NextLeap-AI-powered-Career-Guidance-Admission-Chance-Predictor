@@ -1,0 +1,134 @@
+{% extends "base.html" %}
+{% block content %}
+<style>
+    table.table-bordered th,
+    table.table-bordered td {
+        border: 1px solid #2c2c2c !important;
+    }
+
+    table.table-bordered {
+        border: 1px solid #2c2c2c !important;
+    }
+
+    table th, table td {
+        padding: 12px;
+        text-align: center;
+    }
+
+    form textarea.form-control {
+        border: 1px solid #2c2c2c !important;
+        border-radius: 6px;
+        padding: 10px;
+        resize: vertical;
+    }
+
+    form input[type="submit"] {
+        margin-top: 10px;
+        padding: 6px 14px;
+        border: none;
+        background-color: #3D405B;
+        color: white;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    form input[type="submit"]:hover {
+        background-color: #2c2c2c;
+    }
+
+    /* Ensure hero section fits between header & footer */
+    .hero-section {
+        min-height: calc(100vh - 120px); /* adjust if header/footer height differs */
+        overflow-y: auto;
+        padding-top: 100px;  /* push content below header */
+        padding-bottom: 60px; /* keep above footer */
+    }
+</style>
+
+<!-- College Registrations Page -->
+<section class="hero-section d-flex justify-content-center align-items-center" id="section_1">
+    <div class="section-overlay"></div>
+
+    <!-- Top SVG Wave -->
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+        <path fill="#3D405B" fill-opacity="1"
+              d="M0,224L34.3,192C68.6,160,137,96,206,90.7C274.3,85,343,139,411,144C480,149,549,107,
+              617,122.7C685.7,139,754,213,823,240C891.4,267,960,245,1029,224C1097.1,203,
+              1166,181,1234,160C1302.9,139,1371,117,1406,106.7L1440,96L1440,0L0,0Z"></path>
+    </svg>
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10 col-md-12 col-12">
+                <div class="bg-white p-5 rounded shadow-lg">
+                    <h2 class="text-center mb-4 text-dark">College Registrations</h2>
+
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover align-middle">
+                            <thead class="table-dark text-center">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Place</th>
+                                    <th>Email</th>
+                                    <th>Phone</th>
+                                    <th>Proof</th>
+                                    <th>Status</th>
+                                    <th style="width: 400px;">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for i in o %}
+                                <tr>
+                                    <td>{{ i.id }}</td>
+                                    <td>{{ i.name }}</td>
+                                    <td>{{ i.place }}</td>
+                                    <td>{{ i.email }}</td>
+                                    <td>{{ i.phone }}</td>
+                                    <td>
+                                        {% if i.proof %}
+                                            <a href="/static/media/{{i.proof}}" target="_blank">View Proof</a>
+                                        {% else %}
+                                            No File
+                                        {% endif %}
+                                    </td>
+                                    <td>{{ i.status|default:"pending" }}</td>
+                                    <td>
+                                        {% if i.status == 'accepted' %}
+                                            <a href="/acollegerej/{{ i.id }}" class="btn btn-danger btn-sm">Reject</a>
+                                            <a href="/acollegeblock/{{ i.id }}" class="btn btn-warning btn-sm">Block</a>
+                                        {% elif i.status == 'rejected' %}
+                                            <a href="/acollegeacc/{{ i.id }}" class="btn btn-success btn-sm">Accept</a>
+                                            <a href="/acollegeblock/{{ i.id }}" class="btn btn-warning btn-sm">Block</a>
+                                        {% elif i.status == 'blocked' %}
+                                            <a href="/acollegeunb/{{ i.id }}" class="btn btn-info btn-sm">Unblock</a>
+                                        {% elif i.status == 'unblocked' %}
+                                            <a href="/acollegeacc/{{ i.id }}" class="btn btn-success btn-sm">Accept</a>
+                                            <a href="/acollegerej/{{ i.id }}" class="btn btn-danger btn-sm">Reject</a>
+                                            <a href="/acollegeblock/{{ i.id }}" class="btn btn-warning btn-sm">Block</a>
+                                        {% else %}
+                                            <a href="/acollegeacc/{{ i.id }}" class="btn btn-success btn-sm">Accept</a>
+                                            <a href="/acollegerej/{{ i.id }}" class="btn btn-danger btn-sm">Reject</a>
+                                            <a href="/acollegeblock/{{ i.id }}" class="btn btn-warning btn-sm">Block</a>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom SVG Wave -->
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+        <path fill="#ffffff" fill-opacity="1"
+              d="M0,224L34.3,192C68.6,160,137,96,206,90.7C274.3,85,343,139,411,144C480,149,549,107,
+              617,122.7C685.7,139,754,213,823,240C891.4,267,960,245,1029,224C1097.1,203,
+              1166,181,1234,160C1302.9,139,1371,117,1406,106.7L1440,96L1440,320L0,320Z"></path>
+    </svg>
+</section>
+{% endblock %}

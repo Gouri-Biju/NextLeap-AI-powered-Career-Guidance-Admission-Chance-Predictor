@@ -1,0 +1,45 @@
+{% include 'mainbase.html' %}
+
+<!-- Hero Section with Styled Login -->
+<section class="hero-section d-flex justify-content-center align-items-center" id="section_1">
+    <div class="section-overlay"></div>
+
+    <!-- Top SVG Wave -->
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+        <path fill="#3D405B" fill-opacity="1" d="M0,224L34.3,192C68.6,160,137,96,206,90.7C274.3,85,343,139,411,144C480,149,549,107,617,122.7C685.7,139,754,213,823,240C891.4,267,960,245,1029,224C1097.1,203,1166,181,1234,160C1302.9,139,1371,117,1406,106.7L1440,96L1440,0L0,0Z"></path>
+    </svg>
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-5 col-md-8 col-12">
+                <div class="bg-white p-5 rounded shadow-lg">
+                    <h2 class="mb-4 text-center text-dark">Login</h2>
+                    <form method="post" onsubmit="return validateForm()">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="uname" class="form-label">Username</label>
+                            <input type="text" name="uname" id="uname" class="form-control" required placeholder="Enter your username">
+                        </div>
+                        <div class="mb-4">
+                            <label for="pwd" class="form-label">Password</label>
+                            <input type="password" name="pwd" id="pwd" class="form-control" required placeholder="Enter your password">
+                        </div>
+                        <div class="d-grid">
+                            <input type="submit" name="submit" value="Login" class="btn btn-dark">
+                        </div>
+                    </form>
+                    <div class="text-danger mt-3" id="error-msg" style="display: none;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom SVG Wave -->
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+        <path fill="#ffffff" fill-opacity="1" d="M0,224L34.3,192C68.6,160,137,96,206,90.7C274.3,85,343,139,411,144C480,149,549,107,617,122.7C685.7,139,754,213,823,240C891.4,267,960,245,1029,224C1097.1,203,1166,181,1234,160C1302.9,139,1371,117,1406,106.7L1440,96L1440,320L0,320Z"></path>
+    </svg>
+</section>
+
+
+
+{% include 'mainfooter.html' %}

@@ -1,0 +1,353 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        <title>Career Quest College Dashboard</title>
+
+        <!-- CSS FILES -->                
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+        <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+
+        <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+
+        <link href="/static/css/bootstrap-icons.css" rel="stylesheet">
+
+        <link href="/static/css/templatemo-tiya-golf-club.css" rel="stylesheet">
+        
+<!--
+
+TemplateMo 587 Tiya Golf Club
+
+https://templatemo.com/tm-587-tiya-golf-club
+
+-->
+<style>
+/* Allow scrolling when needed but hide scrollbar */
+body {
+    overflow-y: auto;             /* only show scroll when necessary */
+    -ms-overflow-style: none;     /* IE/Edge */
+    scrollbar-width: none;        /* Firefox */
+}
+
+body::-webkit-scrollbar {         /* Chrome, Safari */
+    display: none;
+}
+
+    .site-footer {
+        margin-top: 60px; /* creates space above footer */
+
+        background: linear-gradient(135deg, #1f1c2c, #928dab); /* gradient background */
+        color: #fff;
+        position: relative;
+        overflow: hidden;
+        padding: 50px 0 20px;
+        text-align: center;
+    }
+
+    /* Wave effect on top of footer */
+    .site-footer::before {
+        content: "";
+        position: absolute;
+        top: -60px;
+        left: 0;
+        width: 100%;
+        height: 60px;
+        background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'><path fill='%23ffffff' fill-opacity='1' d='M0,160L60,170.7C120,181,240,203,360,202.7C480,203,600,181,720,170.7C840,160,960,160,1080,181.3C1200,203,1320,245,1380,266.7L1440,288L1440,0L1380,0C1320,0,1200,0,1080,0C960,0,840,0,720,0C600,0,480,0,360,0C240,0,120,0,60,0L0,0Z'></path></svg>") no-repeat;
+        background-size: cover;
+    }
+
+    /* Footer content */
+    .footer-container {
+        max-width: 1200px;
+        margin: auto;
+        padding: 0 20px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 30px;
+    }
+
+    .footer-col {
+        flex: 1 1 250px;
+    }
+
+    .footer-col h5 {
+        font-weight: 700;
+        margin-bottom: 20px;
+        color: #ffd369;
+    }
+
+    .footer-col p, .footer-col a {
+        font-size: 15px;
+        line-height: 1.8;
+        color: #ddd;
+        text-decoration: none;
+    }
+
+    .footer-col a:hover {
+        color: #ffd369;
+    }
+
+    /* Social links */
+    .footer-social {
+        margin-top: 20px;
+    }
+
+    .footer-social a {
+        display: inline-block;
+        margin: 0 10px;
+        width: 40px;
+        height: 40px;
+        background: rgba(255,255,255,0.1);
+        color: white;
+        border-radius: 50%;
+        line-height: 40px;
+        font-size: 18px;
+        transition: all 0.3s ease;
+    }
+
+    .footer-social a:hover {
+        background: #ffd369;
+        color: #1f1c2c;
+        transform: translateY(-3px);
+    }
+
+    /* Footer bottom */
+    .footer-bottom {
+        border-top: 1px solid rgba(255,255,255,0.2);
+        margin-top: 30px;
+        padding-top: 15px;
+        font-size: 14px;
+        color: #bbb;
+    }
+</style>
+    </head>
+    
+    <body>
+
+        <main>
+
+            <nav class="navbar navbar-expand-lg">                
+                <div class="container">
+                    <a class="navbar-brand d-flex align-items-center" href="/collegehome">
+                        <img src="/static/images/logo.png" class="navbar-brand-image img-fluid" alt="Tiya Golf Club">
+                        <span class="navbar-brand-text">
+                            Career Guide
+                            <small>College Dashboard</small>
+                        </span>
+                    </a>
+
+                    <div class="d-lg-none ms-auto me-3">
+                        <a class="btn custom-btn custom-border-btn" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">About</a>
+                    </div>
+    
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+    
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="navbar-nav ms-lg-auto">
+                            <li class="nav-item">
+    <a class="nav-link" href="/collegehome">Home</a>
+</li>
+    
+                            <li class="nav-item">
+    <a class="nav-link" href="/ccourse">Course</a>
+</li>
+
+<li class="nav-item">
+    <a class="nav-link" href="/crequeststatus">Request Status</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="/add_last_admission">Admission</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="/cnotifications">Notifications</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="/cviewprofile">View Profile</a>
+</li>
+                            
+                        </ul>
+
+
+                        <ul><li class="nav-item">
+    <a class="nav-link logout-btn d-flex align-items-center justify-content-center gap-2" href="/" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Logout">
+        <i class="bi bi-box-arrow-right fs-5"></i> <span class="logout-text">Logout</span>
+    </a>
+</li>
+
+<style>
+.logout-btn {
+    background: linear-gradient(to right, #ff4b2b, #ff416c);
+    color: white !important;
+    padding: 8px 18px;
+    border-radius: 50px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(255, 65, 108, 0.3);
+    text-decoration: none;
+}
+.logout-btn:hover {
+    background: linear-gradient(to right, #ff416c, #ff4b2b);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(255, 65, 108, 0.45);
+}
+.logout-btn i {
+    transition: transform 0.3s ease;
+}
+.logout-btn:hover i {
+    transform: rotate(-90deg);
+}
+</style>
+
+</ul>
+<ul>
+    <a class="btn about-icon-btn" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample" title="About">
+    <i class="bi bi-info-circle-fill"></i>
+</a>
+
+<style>
+.about-icon-btn {
+    background: linear-gradient(to right, #00b4db, #0083b0);
+    color: white;
+    padding: 8px;
+    border: none;
+    border-radius: 50%;
+    font-size: 18px;
+    transition: all 0.3s ease;
+    box-shadow: 0 3px 8px rgba(0, 132, 176, 0.3);
+}
+
+.about-icon-btn:hover {
+    background: linear-gradient(to right, #0083b0, #00b4db);
+    transform: translateY(-1px);
+    box-shadow: 0 5px 12px rgba(0, 132, 176, 0.45);
+}
+</style>
+
+</ul>
+                    </div>
+                </div>
+            </nav>
+
+<!-- Offcanvas Info Panel (right side) -->
+<div class="offcanvas offcanvas-end" data-bs-scroll="true" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title text-primary" id="offcanvasExampleLabel">About This System (College)</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+
+    <div class="offcanvas-body">
+        <h6 class="fw-bold">🎓 Career Guidance & Admission Prediction System</h6>
+        <p>Welcome to your College Dashboard — a powerful tool to manage your institution's profile, academic offerings, and admission data to support students in making informed decisions.</p>
+
+        <h6 class="fw-bold text-secondary">🔍 What the System Does:</h6>
+        <ul>
+            <li>Guides students through AI-driven assessments to match them with the right courses and colleges.</li>
+            <li>Predicts admission chances based on real academic records and trends.</li>
+            <li>Connects students with colleges for inquiries, guidance, and follow-ups.</li>
+        </ul>
+
+        <h6 class="fw-bold text-secondary">🏫 Your Role as a College:</h6>
+        <ul>
+            <li><strong>Update Course Data:</strong> Keep your department, course, and seat availability updated.</li>
+            <li><strong>Upload Admission Data:</strong> Share past admission trends to help power accurate predictions.</li>
+            <li><strong>Respond to Students:</strong> Reply to student queries and guide them through the admission process.</li>
+            <li><strong>Publish Notices:</strong> Announce admission deadlines, events, and seat updates.</li>
+            <li><strong>Maintain Credibility:</strong> Ensure transparency and accuracy in all uploaded information.</li>
+        </ul>
+
+        <h6 class="fw-bold text-secondary">💼 Why It Matters:</h6>
+        <p>By keeping your data updated and interacting with students, your institution gains visibility and trust. It also empowers students to make smart choices based on real insights.</p>
+
+        <div class="alert alert-success mt-3">
+            <strong>📌 Tip:</strong> Engage regularly to increase student interest in your college and offerings.
+        </div>
+    </div>
+
+    <!-- Decorative SVG -->
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+        <path fill="#3D405B" fill-opacity="1" d="M0,224L34.3,192C68.6,160,137,96,206,90.7C274.3,85,343,139,411,144C480,149,549,107,617,122.7C685.7,139,754,213,823,240C891.4,267,960,245,1029,224C1097.1,203,1166,181,1234,160C1302.9,139,1371,117,1406,106.7L1440,96L1440,320L0,320Z"></path>
+    </svg>
+</div>
+
+      {% block content %}
+        {% endblock %}
+
+
+    <footer class="site-footer">
+    <div class="container text-md-start">
+        <div class="row">
+
+            <!-- Logo or Brand Name -->
+
+
+            <!-- Contact Info -->
+
+        </div>
+
+        <hr class="my-3 text-white-50" />
+
+        <!-- Footer Bottom -->
+        <div class="text-center text-muted">
+            © 2025 <strong>Career Navigator</strong>. All rights reserved.
+        </div>
+    </div>
+    <div class="container text-md-start">
+        <div class="row">
+
+            <!-- Logo or Brand Name -->
+            <div class="col-lg-6 col-12 me-auto mb-4 mb-lg-0">
+                <a class="navbar-brand d-flex align-items-center text-white mb-3" href="/">
+                    <i class="fas fa-compass fa-lg me-2"></i>
+                    <span class="h5 mb-0">Career Navigator</span>
+                </a>
+                <p>
+                    A smart guidance system helping students choose the right course and college based on skills and interests.
+                </p>
+            </div>
+
+            <!-- Contact Info -->
+            <div class="col-md-4 col-lg-4 col-xl-3 mx-auto mb-4 ">
+                <h6 class="text-uppercase fw-bold mb-4">Contact</h6>
+                <p><i class="fas fa-home me-3"></i> Kerala, India</p>
+                <p><i class="fas fa-envelope me-3"></i> support@careernav.com</p>
+                <p><i class="fas fa-phone me-3"></i> +91 98765 43210</p>
+            </div>
+                    <div class="text-center text-muted">
+            © 2025 <strong>Career Navigator</strong>. All rights reserved.
+        </div>
+        </div>
+
+        <hr class="my-3 text-white-50" />
+
+        <!-- Footer Bottom -->
+
+    </div>
+
+
+
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#81B29A" fill-opacity="1" d="M0,224L34.3,192C68.6,160,137,96,206,90.7C274.3,85,343,139,411,144C480,149,549,107,617,122.7C685.7,139,754,213,823,240C891.4,267,960,245,1029,224C1097.1,203,1166,181,1234,160C1302.9,139,1371,117,1406,106.7L1440,96L1440,320L1405.7,320C1371.4,320,1303,320,1234,320C1165.7,320,1097,320,1029,320C960,320,891,320,823,320C754.3,320,686,320,617,320C548.6,320,480,320,411,320C342.9,320,274,320,206,320C137.1,320,69,320,34,320L0,320Z"></path></svg>
+
+</footer>
+
+        <!-- JAVASCRIPT FILES -->
+        <script src="/static/js/jquery.min.js"></script>
+        <script src="/static/js/bootstrap.bundle.min.js"></script>
+        <script src="/static/js/jquery.sticky.js"></script>
+        <script src="/static/js/click-scroll.js"></script>
+        <script src="/static/js/animated-headline.js"></script>
+        <script src="/static/js/modernizr.js"></script>
+        <script src="/static/js/custom.js"></script>
+
+    </body>
+</html>

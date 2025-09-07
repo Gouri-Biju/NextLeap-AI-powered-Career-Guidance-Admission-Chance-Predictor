@@ -1,0 +1,187 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+    /* Fixed header & footer */
+    header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 1000;
+    }
+    .hero-section {
+        min-height: calc(100vh - 120px); /* adjust if header/footer height differs */
+        overflow-y: auto;
+        padding-top: 100px;   /* space below header */
+        padding-bottom: 60px; /* space above footer */
+    }
+
+    /* Hide scrollbar but keep scrolling */
+    .hero-section::-webkit-scrollbar {
+        display: none;
+    }
+    .hero-section {
+        -ms-overflow-style: none;  /* IE/Edge */
+        scrollbar-width: none;     /* Firefox */
+    }
+
+    /* Scrollable content */
+    .scrollable-content {
+        margin-top: 80px;    /* header height */
+        margin-bottom: 80px; /* footer height */
+        height: calc(100vh - 160px);
+        overflow-y: auto;
+        padding-bottom: 20px;
+    }
+
+    /* Hide scrollbars */
+    .scrollable-content::-webkit-scrollbar {
+        display: none;
+    }
+    .scrollable-content {
+        -ms-overflow-style: none;  /* IE/Edge */
+        scrollbar-width: none;     /* Firefox */
+    }
+
+    /* Table styling */
+    table.table-bordered th,
+    table.table-bordered td {
+        border: 1px solid #2c2c2c !important;
+    }
+    table.table-bordered {
+        border: 1px solid #2c2c2c !important;
+    }
+    table th, table td {
+        padding: 12px;
+        text-align: center;
+        vertical-align: middle;
+    }
+    thead th {
+        position: sticky;
+        top: 0;
+        z-index: 2;
+    }
+
+    /* Form styling */
+    .form-control {
+        border: 1px solid #3D405B;
+        box-shadow: none !important;
+    }
+
+</style>
+<section class="hero-section" id="section_1">
+    <!-- Top SVG Wave -->
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+        <path fill="#3D405B" fill-opacity="1"
+              d="M0,224L34.3,192C68.6,160,137,96,206,90.7C274.3,85,343,139,411,144C480,149,549,107,617,122.7C685.7,139,754,213,823,240C891.4,267,960,245,1029,224C1097.1,203,1166,181,1234,160C1302.9,139,1371,117,1406,106.7L1440,96L1440,0L0,0Z">
+        </path>
+    </svg>
+
+    <!-- Scrollable middle content -->
+    <div class="scrollable-content">
+        <div class="container">
+            <!-- Form Card -->
+            <div class="row justify-content-center">
+                <div class="col-lg-10 col-md-12 col-12">
+                    <div class="bg-white p-5 rounded shadow-lg">
+                        <h2 class="text-center mb-4 text-dark">Add to Dataset</h2>
+
+                        <form method="POST" onsubmit="return validateForm();">
+                            <div class="mb-3">
+                                <label class="form-label">Course</label>
+                                <select name="cid" id="">
+                                    <option value="">-- Select Course --</option>
+                                    {% for k in  c%}
+                                    <option value="{{ k.id }}">{{ k.course }} of {{ k.department.department }} Department</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Question</label>
+                                <input type="text" name="question" id="question" class="form-control" required value="{{ z.question|default:'' }}">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Answer</label>
+                                <textarea name="answer" id="answer" class="form-control" required>{{ z.answer|default:'' }}</textarea>
+                            </div>
+                            {% if z %}
+                            <button type="submit" name="update" class="btn btn-warning">Update</button>
+                            {% else %}
+                            <button type="submit" name="submit" class="btn btn-primary">Submit</button>
+                            {% endif %}
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Table Card -->
+            <div class="row justify-content-center mt-5">
+                <div class="col-lg-12">
+                    <div class="bg-white p-5 rounded shadow-lg">
+                        <h2 class="text-center mb-4 text-dark">Dataset Entries</h2>
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Department</th>
+                                        <th>Course</th>
+                                        <th>Question</th>
+                                        <th>Answer</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for entry in o %}
+                                    <tr>
+                                        <td>{{ entry.id }}</td>
+                                        <td>{{ entry.course.course }}</td>
+                                        <td>{{ entry.course.department.department }}</td>
+                                        <td>{{ entry.question }}</td>
+                                        <td>{{ entry.answer }}</td>
+                                        <td>
+                                            <a href="/cdatasetedit/{{ entry.id }}" class="btn btn-sm btn-info">Edit</a>
+                                            <a href="/cdatasetdelete/{{ entry.id }}" class="btn btn-sm btn-danger">Delete</a>
+                                        </td>
+                                    </tr>
+                                    {% empty %}
+                                    <tr>
+                                        <td colspan="4" class="text-center">No entries found.</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom SVG Wave -->
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+        <path fill="#ffffff" fill-opacity="1"
+              d="M0,224L34.3,192C68.6,160,137,96,206,90.7C274.3,85,343,139,411,144C480,149,549,107,617,122.7C685.7,139,754,213,823,240C891.4,267,960,245,1029,224C1097.1,203,1166,181,1234,160C1302.9,139,1371,117,1406,106.7L1440,96L1440,320L0,320Z">
+        </path>
+    </svg>
+</section>
+
+<!-- JS Form Validation -->
+<script>
+    function validateForm() {
+        const question = document.getElementById("question").value.trim();
+        const answer = document.getElementById("answer").value.trim();
+        const questionRegex = /^[A-Za-z0-9\s\?\!\.\,\-\'\"]+$/;
+
+        if (!questionRegex.test(question)) {
+            alert("Question should only contain letters, numbers, and basic punctuation.");
+            return false;
+        }
+        if (answer.length === 0) {
+            alert("Answer is required.");
+            return false;
+        }
+        return true;
+    }
+</script>
+{% endblock %}

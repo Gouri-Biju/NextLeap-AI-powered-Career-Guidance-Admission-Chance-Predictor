@@ -1,0 +1,156 @@
+{% extends "base.html" %}
+{% block content %}
+<style>
+    table.table-bordered th,
+    table.table-bordered td {
+        border: 1px solid #2c2c2c !important;
+    }
+
+    table.table-bordered {
+        border: 1px solid #2c2c2c !important;
+    }
+
+    table th, table td {
+        padding: 12px;
+        text-align: center;
+    }
+
+    /* Form fields */
+    form input.form-control,
+    form textarea.form-control,
+    form select.form-control {
+        border: 1px solid #2c2c2c !important;
+        border-radius: 6px;
+        padding: 10px;
+    }
+
+    form label {
+        font-weight: 500;
+    }
+
+    /* Align hero-section between header & footer */
+    .hero-section {
+        min-height: calc(100vh - 120px); /* adjust if header/footer height differs */
+        overflow-y: auto;
+        padding-top: 100px;   /* space below header */
+        padding-bottom: 60px; /* space above footer */
+    }
+
+    /* Hide scrollbar but keep scrolling */
+    .hero-section::-webkit-scrollbar {
+        display: none;
+    }
+    .hero-section {
+        -ms-overflow-style: none;  /* IE/Edge */
+        scrollbar-width: none;     /* Firefox */
+    }
+</style>
+
+<section class="hero-section" id="section_1">
+    <div class="section-overlay"></div>
+
+    <!-- Top SVG Wave -->
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+        <path fill="#3D405B" fill-opacity="1"
+              d="M0,224L34.3,192C68.6,160,137,96,206,90.7C274.3,85,343,139,411,144C480,149,549,107,
+              617,122.7C685.7,139,754,213,823,240C891.4,267,960,245,1029,224C1097.1,203,
+              1166,181,1234,160C1302.9,139,1371,117,1406,106.7L1440,96L1440,0L0,0Z">
+        </path>
+    </svg>
+
+    <div class="container mb-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-10 col-md-12 col-12">
+                <div class="bg-white p-5 rounded shadow-lg">
+                    {% if z %}
+                        <h2 class="text-center mb-4">Edit Article</h2>
+                    {% else %}
+                        <h2 class="text-center mb-4">Add Article</h2>
+                    {% endif %}
+
+                    <form method="post" onsubmit="return validateArticleForm();">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="id" class="form-label">Article Title</label>
+                            <input type="text" name="id" id="id" class="form-control" required
+                                   value="{% if z %}{{ z.title }}{% endif %}">
+                        </div>
+                        <div class="mb-3">
+                            <label for="c" class="form-label">Subject</label>
+                            <input type="text" name="c" id="c" class="form-control" required
+                                   value="{% if z %}{{ z.subject }}{% endif %}">
+                        </div>
+                        <button type="submit" name="{% if z %}update{% else %}submit{% endif %}"
+                                class="btn btn-primary">
+                            {% if z %}Edit Article{% else %}Add Article{% endif %}
+                        </button>
+                    </form>
+
+                    <hr class="my-5">
+
+                    <h3 class="text-center mb-4">All Articles</h3>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped align-middle">
+                            <thead class="table-dark text-center">
+                            <tr>
+                                <th>ID</th>
+                                <th>Title</th>
+                                <th>Subject</th>
+                                <th>Date</th>
+                                <th>Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for i in o %}
+                                <tr>
+                                    <td>{{ i.id }}</td>
+                                    <td>{{ i.title }}</td>
+                                    <td>{{ i.subject }}</td>
+                                    <td>{{ i.date }}</td>
+                                    <td>
+                                        <a href="/aarticlesedit/{{ i.id }}" class="btn btn-warning btn-sm">Edit</a>
+                                        <a href="/aaarticlesdelete/{{ i.id }}" class="btn btn-danger btn-sm">Delete</a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom SVG Wave -->
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+        <path fill="#ffffff" fill-opacity="1"
+              d="M0,224L34.3,192C68.6,160,137,96,206,90.7C274.3,85,343,139,411,144C480,149,549,107,
+              617,122.7C685.7,139,754,213,823,240C891.4,267,960,245,1029,224C1097.1,203,
+              1166,181,1234,160C1302.9,139,1371,117,1406,106.7L1440,96L1440,320L0,320Z">
+        </path>
+    </svg>
+</section>
+
+<script>
+    function validateArticleForm() {
+        const title = document.getElementById("id").value.trim();
+        const subject = document.getElementById("c").value.trim();
+        const namePattern = /^[A-Za-z\s]+$/;
+
+        if (title === "" || subject === "") {
+            alert("All fields are required.");
+            return false;
+        }
+        if (!namePattern.test(title)) {
+            alert("Article Title should contain only letters and spaces.");
+            return false;
+        }
+        if (!namePattern.test(subject)) {
+            alert("Subject should contain only letters and spaces.");
+            return false;
+        }
+        return true;
+    }
+</script>
+
+{% endblock %}

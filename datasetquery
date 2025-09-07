@@ -1,0 +1,389 @@
+-- Course 1: BSc Computer Science
+INSERT INTO guidanceapp_dataset (question, answer, course_id) VALUES
+('What is the primary programming language taught in BSc Computer Science?', 'Python', 1),
+('Define algorithm.', 'A set of instructions to solve a problem', 1),
+('What is a data structure?', 'A way to organize and store data', 1),
+('Explain the concept of recursion.', 'A function calling itself to solve a problem', 1),
+('What is the difference between compiled and interpreted languages?', 'Compiled languages are converted into machine code before execution; interpreted languages are translated during runtime', 1),
+('What is an operating system?', 'Software that manages hardware and software resources', 1),
+('What is a database?', 'An organized collection of data', 1),
+('What does OOP stand for?', 'Object Oriented Programming', 1),
+('Name four basic data types.', 'Int`guidanceapp_userprofile`eger, float, string, boolean', 1),
+('What is the use of loops in programming?', 'To repeat a block of code multiple times', 1);
+
+-- Course 2: BTech Computer Science
+INSERT INTO guidanceapp_dataset (question, answer, course_id) VALUES
+('What is software engineering?', 'The application of engineering principles to software development', 2),
+('Explain the software development lifecycle.', 'Stages include requirement analysis, design, implementation, testing, deployment, maintenance', 2),
+('What is a programming paradigm?', 'A style or way of programming', 2),
+('Define inheritance in OOP.', 'A mechanism where one class acquires properties of another', 2),
+('What is a compiler?', 'A program that translates source code into machine code', 2),
+('What is polymorphism?', 'Ability of objects to take multiple forms', 2),
+('What is a linked list?', 'A linear data structure with nodes linked by pointers', 2),
+('What is multithreading?', 'Executing multiple threads concurrently', 2),
+('Explain the concept of abstraction.', 'Hiding internal details and showing only functionalities', 2),
+('What is Big O notation?', 'A way to describe algorithm complexity', 2);
+
+-- Course 3: BTech Artificial Intelligence
+INSERT INTO guidanceapp_dataset (question, answer, course_id) VALUES
+('What is Artificial Intelligence?', 'Simulation of human intelligence by machines', 3),
+('Name two types of AI.', 'Narrow AI and General AI', 3),
+('What is machine learning?', 'A subset of AI focused on learning from data', 3),
+('Define supervised learning.', 'Learning with labeled data', 3),
+('What is a neural network?', 'A series of algorithms modeled after the human brain', 3),
+('What is natural language processing?', 'AI that understands human language', 3),
+('Explain reinforcement learning.', 'Learning by trial and error to maximize reward', 3),
+('What is overfitting in ML?', 'When a model fits training data too closely', 3),
+('What is a decision tree?', 'A model using tree-like structures for decisions', 3),
+('Name a popular Python library for AI.', 'TensorFlow', 3);
+
+-- Course 4: BTech Data Science
+INSERT INTO guidanceapp_dataset (question, answer, course_id) VALUES
+('What is Data Science?', 'Interdisciplinary field focused on extracting knowledge from data', 4),
+('What is data cleaning?', 'Removing errors and inconsistencies from data', 4),
+('Name a common data visualization tool.', 'Matplotlib', 4),
+('What is a data warehouse?', 'Central repository for integrated data', 4),
+('Explain hypothesis testing.', 'A method to test assumptions about data', 4),
+('What is supervised learning?', 'Learning from labeled datasets', 4),
+('What is clustering?', 'Grouping similar data points together', 4),
+('Name a popular programming language in data science.', 'Python', 4),
+('What is feature engineering?', 'Creating new input features for models', 4),
+('What is a regression model?', 'A model predicting continuous values', 4);
+
+-- Course 5: BTech Cyber Security
+INSERT INTO guidanceapp_dataset (question, answer, course_id) VALUES
+('What is Cyber Security?', 'Protecting computer systems from attacks', 5),
+('Define malware.', 'Malicious software intended to damage', 5),
+('What is a firewall?', 'A system to block unauthorized access', 5),
+('What is phishing?', 'Fraudulent attempt to obtain sensitive info', 5),
+('Explain encryption.', 'Process of encoding data to protect it', 5),
+('What is a vulnerability?', 'Weakness in a system', 5),
+('What is a DDoS attack?', 'Distributed denial of service attack', 5),
+('Name a common security protocol.', 'SSL/TLS', 5),
+('What is two-factor authentication?', 'Security process using two verification methods', 5),
+('What is ethical hacking?', 'Legally probing systems to find vulnerabilities', 5);
+
+-- Course 6: BSc Software Engineering
+INSERT INTO guidanceapp_dataset (question, answer, course_id) VALUES
+('What is software testing?', 'Evaluating software to find bugs', 6),
+('Explain agile methodology.', 'Iterative approach to software development', 6),
+('What is version control?', 'Managing changes to source code', 6),
+('Define continuous integration.', 'Automated merging and testing of code', 6),
+('What is a use case?', 'Description of system behavior', 6),
+('What is refactoring?', 'Improving code without changing behavior', 6),
+('What is a software requirement?', 'Conditions to be met by software', 6),
+('What is the difference between verification and validation?', 'Verification checks if software meets specs, validation checks if it meets user needs', 6),
+('What is a design pattern?', 'Reusable solution to a common problem', 6),
+('What is debugging?', 'Identifying and fixing errors in code', 6);
+
+-- Course 7: BTech Mechanical Engineering
+INSERT INTO guidanceapp_dataset (question, answer, course_id) VALUES
+('What is Newton’s Second Law?', 'Force equals mass times acceleration', 7),
+('What is thermodynamics?', 'Study of heat and energy transfer', 7),
+('Define torque.', 'Rotational force', 7),
+('What is stress in materials?', 'Force per unit area', 7),
+('What is CAD?', 'Computer-Aided Design', 7),
+('What is the unit of pressure?', 'Pascal', 7),
+('What is a gear used for?', 'To transmit torque', 7),
+('What is fluid mechanics?', 'Study of fluids and their forces', 7),
+('What is the function of a piston?', 'Converts energy into mechanical work', 7),
+('What is fatigue in materials?', 'Weakening due to repeated stress', 7);
+
+-- Course 8: BTech Electrical Engineering
+INSERT INTO guidanceapp_dataset (question, answer, course_id) VALUES
+('What is Ohm’s law?', 'Voltage equals current times resistance', 8),
+('What is an electric circuit?', 'A path for electric current', 8),
+('Define voltage.', 'Electric potential difference', 8),
+('What is a transformer?', 'Device that changes voltage levels', 8),
+('What is AC and DC?', 'Alternating current and direct current', 8),
+('What is capacitance?', 'Ability to store charge', 8),
+('What is resistance?', 'Opposition to current flow', 8),
+('What is an inductor?', 'Component that stores energy in magnetic field', 8),
+('What is power factor?', 'Ratio of real power to apparent power', 8),
+('What is a semiconductor?', 'Material with conductivity between conductor and insulator', 8);
+
+-- Course 9: BTech Civil Engineering
+INSERT INTO guidanceapp_dataset (question, answer, course_id) VALUES
+('What is concrete?', 'A mixture of cement, sand, gravel, and water', 9),
+('Define load bearing.', 'Supporting weight', 9),
+('What is a beam?', 'Structural element that resists loads', 9),
+('What is soil testing?', 'Assessing soil properties for construction', 9),
+('What is a foundation?', 'Base of a building', 9),
+('What is a column?', 'Vertical structural element', 9),
+('What is reinforcement?', 'Steel bars used to strengthen concrete', 9),
+('What is a retaining wall?', 'Structure to hold back soil', 9),
+('What is surveying?', 'Measuring land and distances', 9),
+('What is a cantilever?', 'Beam supported on one end only', 9);
+
+-- Course 10: BTech Electronics and Communication
+INSERT INTO guidanceapp_dataset (question, answer, course_id) VALUES
+('What is a diode?', 'A device that allows current to flow in one direction', 10),
+('What is modulation?', 'Altering a signal to transmit information', 10),
+('What is an amplifier?', 'Device that increases signal strength', 10),
+('What is frequency?', 'Number of cycles per second', 10),
+('What is bandwidth?', 'Range of frequencies transmitted', 10),
+('What is a transistor?', 'Semiconductor device used to amplify or switch signals', 10),
+('What is noise in signals?', 'Unwanted disturbances', 10),
+('What is a capacitor?', 'Component that stores electrical energy', 10),
+('What is a resistor?', 'Component that resists electric current', 10),
+('What is a logic gate?', 'Basic digital circuit performing logical operations', 10);
+
+-- Course 11: BTech Mechatronics
+INSERT INTO guidanceapp_dataset (question, answer, course_id) VALUES
+('What is mechatronics?', 'Integration of mechanical, electronics, and computing', 11),
+('What is a sensor?', 'Device that detects changes in environment', 11),
+('What is an actuator?', 'Device that moves or controls a mechanism', 11),
+('What is PLC?', 'Programmable Logic Controller', 11),
+('What is robotics?', 'Design and use of robots', 11),
+('What is automation?', 'Use of control systems to operate machines', 11),
+('What is feedback?', 'Output used to adjust input', 11),
+('What is control theory?', 'Mathematical study of control systems', 11),
+('What is a servo motor?', 'Motor with precise position control', 11),
+('What is signal processing?', 'Analyzing and modifying signals', 11);
+
+-- Course 12: MBBS
+INSERT INTO guidanceapp_dataset (question, answer, course_id) VALUES
+('What does MBBS stand for?', 'Bachelor of Medicine, Bachelor of Surgery', 12),
+('What is anatomy?', 'Study of body structure', 12),
+('What is physiology?', 'Study of body functions', 12),
+('What is pharmacology?', 'Study of drugs', 12),
+('What is pathology?', 'Study of diseases', 12),
+('What is surgery?', 'Branch of medicine dealing with operative procedures', 12),
+('What is a vaccine?', 'Biological preparation for immunity', 12),
+('What is radiology?', 'Use of imaging techniques', 12),
+('What is microbiology?', 'Study of microorganisms', 12),
+('What is cardiology?', 'Study of the heart', 12);
+
+-- Course 13: BDS
+INSERT INTO guidanceapp_dataset (question, answer, course_id) VALUES
+('What does BDS stand for?', 'Bachelor of Dental Surgery', 13),
+('What is oral surgery?', 'Surgical treatment of the mouth', 13),
+('What is orthodontics?', 'Correction of teeth alignment', 13),
+('What is periodontology?', 'Study of gums', 13),
+('What is prosthodontics?', 'Replacement of teeth', 13),
+('What is endodontics?', 'Treatment of dental pulp', 13),
+('What is dental anatomy?', 'Structure of teeth', 13),
+('What is preventive dentistry?', 'Maintaining oral health', 13),
+('What is dental radiology?', 'Imaging of teeth and jaws', 13),
+('What is pedodontics?', 'Dental treatment of children', 13);
+
+-- Course 14: BSc Nursing
+INSERT INTO guidanceapp_dataset (question, answer, course_id) VALUES
+('What is the main role of nurses?', 'Provide patient care', 14),
+('What is hygiene?', 'Practices to maintain health and prevent disease', 14),
+('What is vital signs monitoring?', 'Measuring body functions like pulse and temperature', 14),
+('What is pharmacology?', 'Study of drugs and their effects', 14),
+('What is patient education?', 'Teaching patients about health', 14),
+('What is emergency care?', 'Immediate treatment for urgent conditions', 14),
+('What is infection control?', 'Preventing spread of infections', 14),
+('What is pediatrics?', 'Medical care of children', 14),
+('What is geriatrics?', 'Medical care of elderly', 14),
+('What is rehabilitation?', 'Helping patients recover functions', 14);
+
+-- Course 15: BPharm
+INSERT INTO guidanceapp_dataset (question, answer, course_id) VALUES
+('What is pharmacology?', 'Study of drugs', 15),
+('What is drug formulation?', 'Process of creating medications', 15),
+('What is clinical trials?', 'Testing drugs on humans', 15),
+('What is pharmacokinetics?', 'How drugs move through the body', 15),
+('What is pharmacodynamics?', 'Effects of drugs on the body', 15),
+('What is pharmacy practice?', 'Dispensing and managing medications', 15),
+('What is toxicology?', 'Study of poisons and toxins', 15),
+('What is bioavailability?', 'Rate at which drugs reach circulation', 15),
+('What is drug metabolism?', 'How drugs are broken down', 15),
+('What is pharmaceutical chemistry?', 'Chemistry of drugs and their properties', 15);
+
+-- Course 16: BPT
+INSERT INTO guidanceapp_dataset (question, answer, course_id) VALUES
+('What is physiotherapy?', 'Treatment to restore movement and function', 16),
+('What is musculoskeletal system?', 'Bones and muscles system', 16),
+('What is rehabilitation?', 'Helping patients regain function', 16),
+('What is manual therapy?', 'Hands-on treatment', 16),
+('What is electrotherapy?', 'Use of electrical energy in treatment', 16),
+('What is posture correction?', 'Improving body alignment', 16),
+('What is sports physiotherapy?', 'Care of sports injuries', 16),
+('What is occupational therapy?', 'Helping patients with daily activities', 16),
+('What is pain management?', 'Techniques to reduce pain', 16),
+('What is kinesiology?', 'Study of body movement', 16);
+
+-- Course 17: BCom Finance
+INSERT INTO guidanceapp_dataset (question, answer, course_id) VALUES
+('What is finance?', 'Management of money', 17),
+('What is accounting?', 'Recording financial transactions', 17),
+('What is investment?', 'Allocating money for profit', 17),
+('What is budgeting?', 'Planning expenses', 17),
+('What is risk management?', 'Identifying and reducing financial risks', 17),
+('What is financial analysis?', 'Evaluating financial data', 17),
+('What is capital?', 'Money used for business', 17),
+('What is stock market?', 'Market for buying and selling stocks', 17),
+('What is taxation?', 'Government charges on income', 17),
+('What is auditing?', 'Examining financial records', 17);
+
+-- Course 18: BCom Accounting
+INSERT INTO guidanceapp_dataset (question, answer, course_id) VALUES
+('What is bookkeeping?', 'Recording financial transactions', 18),
+('What is ledger?', 'Book of accounts', 18),
+('What is trial balance?', 'Summary of ledger balances', 18),
+('What is debit?', 'Left side of account', 18),
+('What is credit?', 'Right side of account', 18),
+('What is balance sheet?', 'Financial statement showing assets and liabilities', 18),
+('What is income statement?', 'Report of revenues and expenses', 18),
+('What is depreciation?', 'Reduction in value of assets', 18),
+('What is accounts payable?', 'Money owed by a company', 18),
+('What is accounts receivable?', 'Money owed to a company', 18);
+
+-- Course 19: BBA Finance
+INSERT INTO guidanceapp_dataset (question, answer, course_id) VALUES
+('What is business administration?', 'Management of business operations', 19),
+('What is financial management?', 'Planning and controlling finances', 19),
+('What is marketing?', 'Promoting products and services', 19),
+('What is organizational behavior?', 'Study of human behavior in organizations', 19),
+('What is supply chain?', 'Management of product flow', 19),
+('What is human resources?', 'Managing employees', 19),
+('What is business ethics?', 'Moral principles in business', 19),
+('What is entrepreneurship?', 'Starting new businesses', 19),
+('What is strategic management?', 'Planning long-term goals', 19),
+('What is customer relationship management?', 'Managing interactions with customers', 19);
+
+-- Course 20: BBA International Business
+INSERT INTO guidanceapp_dataset (question, answer, course_id) VALUES
+('What is international business?', 'Trade between countries', 20),
+('What is globalization?', 'Integration of markets worldwide', 20),
+('What is export?', 'Selling goods abroad', 20),
+('What is import?', 'Buying goods from other countries', 20),
+('What is trade policy?', 'Rules governing international trade', 20),
+('What is foreign exchange?', 'Currency trading', 20),
+('What is tariff?', 'Tax on imports', 20),
+('What is balance of payments?', 'Record of all transactions with other countries', 20),
+('What is multinational corporation?', 'Company operating in multiple countries', 20),
+('What is cultural difference?', 'Variations in culture affecting business', 20);
+
+-- Course 21: BA English Literature
+INSERT INTO guidanceapp_dataset (question, answer, course_id) VALUES
+('What is English Literature?', 'Study of English written works', 21),
+('Who wrote "Hamlet"?', 'William Shakespeare', 21),
+('What is poetry?', 'Literary work with rhythm and meter', 21),
+('What is prose?', 'Ordinary written or spoken language', 21),
+('What is a metaphor?', 'Comparison without using like or as', 21),
+('What is a simile?', 'Comparison using like or as', 21),
+('What is a sonnet?', '14-line poem with specific rhyme', 21),
+('What is a play?', 'Dramatic work for performance', 21),
+('Who is the author of "Pride and Prejudice"?', 'Jane Austen', 21),
+('What is theme in literature?', 'Central idea or message', 21);
+
+-- Course 22: BA History
+INSERT INTO guidanceapp_dataset (question, answer, course_id) VALUES
+('What is history?', 'Study of past events', 22),
+('Who was the first President of the USA?', 'George Washington', 22),
+('What was the Renaissance?', 'Period of cultural rebirth', 22),
+('What is a primary source?', 'Original documents or evidence', 22),
+('What is a secondary source?', 'Interpretations of primary sources', 22),
+('What is feudalism?', 'Medieval social system', 22),
+('Who was Napoleon?', 'French military leader', 22),
+('What caused World War I?', 'Assassination of Archduke Ferdinand', 22),
+('What is the Industrial Revolution?', 'Transition to new manufacturing processes', 22),
+('What is democracy?', 'System of government by the people', 22);
+
+-- Course 23: BA Sociology
+INSERT INTO guidanceapp_dataset (question, answer, course_id) VALUES
+('What is sociology?', 'Study of society and social behavior', 23),
+('What is socialization?', 'Process of learning norms and values', 23),
+('What is culture?', 'Shared beliefs and practices', 23),
+('What is social stratification?', 'Hierarchical arrangement of social groups', 23),
+('What is a norm?', 'Rules of behavior', 23),
+('What is deviance?', 'Violation of social norms', 23),
+('What is a role?', 'Expected behavior of an individual', 23),
+('What is social change?', 'Alteration of social structure', 23),
+('What is family?', 'Basic social unit', 23),
+('What is urbanization?', 'Growth of cities', 23);
+
+-- Course 24: BA Political Science
+INSERT INTO guidanceapp_dataset (question, answer, course_id) VALUES
+('What is political science?', 'Study of politics and government', 24),
+('What is democracy?', 'Government by the people', 24),
+('What is constitution?', 'Fundamental law of a country', 24),
+('What is sovereignty?', 'Supreme authority', 24),
+('What is legislature?', 'Body that makes laws', 24),
+('What is executive?', 'Government branch that enforces laws', 24),
+('What is judiciary?', 'Court system', 24),
+('What is federalism?', 'Division of power between central and state governments', 24),
+('What is human rights?', 'Basic rights entitled to all humans', 24),
+('What is political party?', 'Group seeking to gain power', 24);
+
+-- Course 25: MBA Marketing
+INSERT INTO guidanceapp_dataset (question, answer, course_id) VALUES
+('What is marketing?', 'Process of promoting and selling products', 25),
+('What is market segmentation?', 'Dividing a market into groups', 25),
+('What is branding?', 'Creating a unique image', 25),
+('What is advertising?', 'Communicating to promote products', 25),
+('What is customer satisfaction?', 'Measure of how products meet expectations', 25),
+('What is sales promotion?', 'Short-term incentives to buy', 25),
+('What is digital marketing?', 'Marketing using digital channels', 25),
+('What is market research?', 'Collecting information about consumers', 25),
+('What is a target market?', 'Specific group of customers', 25),
+('What is product positioning?', 'How a product is perceived in the market', 25);
+
+-- Course 26: MBA Human Resource
+INSERT INTO guidanceapp_dataset (question, answer, course_id) VALUES
+('What is Human Resource Management?', 'Managing employee relations', 26),
+('What is recruitment?', 'Process of hiring employees', 26),
+('What is training?', 'Improving employee skills', 26),
+('What is performance appraisal?', 'Evaluating employee performance', 26),
+('What is compensation?', 'Employee payment and benefits', 26),
+('What is labor law?', 'Legal framework governing work', 26),
+('What is employee motivation?', 'Encouraging employees to perform', 26),
+('What is workforce planning?', 'Ensuring right number of employees', 26),
+('What is HR analytics?', 'Using data to improve HR decisions', 26),
+('What is workplace diversity?', 'Variety of employees in workplace', 26);
+
+-- Course 27: MBA Finance
+INSERT INTO guidanceapp_dataset (question, answer, course_id) VALUES
+('What is financial management?', 'Planning and controlling finances', 27),
+('What is capital budgeting?', 'Planning long-term investments', 27),
+('What is risk management?', 'Identifying and mitigating financial risks', 27),
+('What is portfolio management?', 'Managing investment collections', 27),
+('What is working capital?', 'Money for daily operations', 27),
+('What is financial statement?', 'Report of financial performance', 27),
+('What is dividend?', 'Share of profits to shareholders', 27),
+('What is stock?', 'Ownership in a company', 27),
+('What is bond?', 'Debt investment', 27),
+('What is inflation?', 'General rise in prices', 27);
+
+-- Course 28: MBA Business Analytics
+INSERT INTO guidanceapp_dataset (question, answer, course_id) VALUES
+('What is business analytics?', 'Using data to improve business decisions', 28),
+('What is data mining?', 'Extracting patterns from data', 28),
+('What is predictive analytics?', 'Using data to predict future events', 28),
+('What is big data?', 'Very large data sets', 28),
+('What is data visualization?', 'Graphical representation of data', 28),
+('What is regression analysis?', 'Modeling relationship between variables', 28),
+('What is clustering?', 'Grouping similar data points', 28),
+('What is dashboard?', 'Visual display of key metrics', 28),
+('What is KPI?', 'Key performance indicator', 28),
+('What is ETL?', 'Extract, Transform, Load process', 28);
+
+-- Course 29: PGDM Management
+INSERT INTO guidanceapp_dataset (question, answer, course_id) VALUES
+('What is management?', 'Coordinating resources to achieve goals', 29),
+('What is planning?', 'Setting objectives and goals', 29),
+('What is organizing?', 'Arranging resources and tasks', 29),
+('What is leading?', 'Motivating and directing people', 29),
+('What is controlling?', 'Monitoring and evaluating progress', 29),
+('What is SWOT analysis?', 'Strengths, Weaknesses, Opportunities, Threats', 29),
+('What is decision making?', 'Choosing between alternatives', 29),
+('What is communication?', 'Sharing information', 29),
+('What is conflict management?', 'Resolving disputes', 29),
+('What is delegation?', 'Assigning tasks to others', 29);
+
+-- Course 30: MBA Operations
+INSERT INTO guidanceapp_dataset (question, answer, course_id) VALUES
+('What is operations management?', 'Managing production and delivery of goods', 30),
+('What is supply chain?', 'Network for product flow', 30),
+('What is quality control?', 'Ensuring products meet standards', 30),
+('What is inventory management?', 'Tracking stock levels', 30),
+('What is logistics?', 'Planning transportation and storage', 30),
+('What is process improvement?', 'Making processes more efficient', 30),
+('What is lean management?', 'Reducing waste in processes', 30),
+('What is Six Sigma?', 'Methodology to reduce defects', 30),
+('What is capacity planning?', 'Determining production capacity', 30),
+('What is forecasting?', 'Predicting future demand', 30);
