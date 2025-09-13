@@ -13,6 +13,7 @@ from guidanceapp.Geminiapi import gpt_course_classifier, gpt_score_answer
 from guidanceapp.models import *
 from django.contrib.auth.hashers import check_password, make_password
 from django.contrib.auth.decorators import login_required
+from django.conf import settings
 
 # Create your views here.
 
@@ -528,41 +529,54 @@ def getcourses(request):
             'cid': i.pk,
         })
     return JsonResponse({'status': 'success', 'data': data})
+from django.http import JsonResponse
+from django.contrib.auth.models import User, Group
+from django.contrib.auth.hashers import make_password
+from django.conf import settings
+from .models import UserProfile
 
 def sreg(request):
-        username = request.POST['uname']
-        pwd=request.POST['pwd']
-        name = request.POST['name']
-        gender = request.POST['gender']
-        place = request.POST['place']
-        post = request.POST['post']
-        pin = request.POST['pin']
-        course = request.POST['course_id']
-        email = request.POST['email']
-        phone = request.POST['phone']
-        image = request.FILES.get('image')
-        fs=FileSystemStorage()
-        saved_path=fs.save(image.name,image)
+    username = request.POST['uname']
+    pwd = request.POST['pwd']
+    name = request.POST['name']
+    gender = request.POST['gender']
+    place = request.POST['place']
+    post = request.POST['post']
+    pin = request.POST['pin']
+    course = request.POST['course_id']
+    email = request.POST['email']
+    phone = request.POST['phone']
+    image = request.FILES.get('image')
 
-        u=User.objects.create(username=username, password=make_password(pwd))
-        u.groups.add(Group.objects.get(name='Student'))
-        c=UserProfile(
-            name=name,
-            gender=gender,
-            place=place,
-            post=post,
-            pin=pin,
-            email=email,
-            phone=phone,
-            image=saved_path,
-            status='pending',
-            course_id=course,
-            user_id=u.id)
-        c.save()
-        response={
-            'status':'success',
-        }
-        return JsonResponse(response)
+    public_url = None
+    if image:
+        # Upload to Supabase bucket (example: "user-images")
+        file_path = f"students/{image.name}"
+        settings.supabase.storage.from_("user-images").upload(file_path, image.read())
+        public_url = settings.supabase.storage.from_("user-images").get_public_url(file_path)
+
+    # Create Django user
+    u = User.objects.create(username=username, password=make_password(pwd))
+    u.groups.add(Group.objects.get(name='Student'))
+
+    # Save profile with Supabase image URL
+    c = UserProfile(
+        name=name,
+        gender=gender,
+        place=place,
+        post=post,
+        pin=pin,
+        email=email,
+        phone=phone,
+        image=public_url,   # ✅ use Supabase public URL
+        status='pending',
+        course_id=course,
+        user_id=u.id
+    )
+    c.save()
+
+    return JsonResponse({'status': 'success'})
+
 
 from django.contrib.auth.models import User, Group
 from django.contrib.auth.hashers import make_password

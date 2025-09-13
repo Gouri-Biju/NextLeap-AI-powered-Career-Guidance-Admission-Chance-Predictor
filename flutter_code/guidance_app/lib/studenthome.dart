@@ -213,12 +213,21 @@ class _StudentPageState extends State<StudentPage>
                                     builder: (context) => StudentProfileApp()),
                               );
                             }),
-                        _buildCard(Icons.message_outlined, "ChatBot",
+
+                        _buildCard(Icons.android, "ChatBot",
                             const Color(0xFF2563EB), () {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => ChatBotPage(userId: uid!)),
+                              );
+                            }),
+                        _buildCard(Icons.local_library, "Colleges",
+                            const Color(0xFF06B6D4), () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => StudentCollegeApp()),
                               );
                             }),
                         _buildCard(Icons.bar_chart_outlined, "Admission Prediction",
@@ -240,14 +249,7 @@ class _StudentPageState extends State<StudentPage>
 
 
 
-                        _buildCard(Icons.lightbulb_outline, "Colleges",
-                            const Color(0xFF06B6D4), () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => StudentCollegeApp()),
-                              );
-                            }),
+
                         _buildCard(Icons.logout,
                             "Logout", const Color(0xFF6366F1), () {
                               Navigator.push(

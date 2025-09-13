@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'AI Career Guidance',
+      title: 'NextLeap',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         fontFamily: 'Poppins',
@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
           filled: true,
           fillColor: Colors.white,
           floatingLabelStyle: const TextStyle(
-            color: Color(0xFF8B1E3F), // Maroon accent for label
+            color: Color(0xFF8B1E3F),
             fontWeight: FontWeight.w600,
           ),
           focusedBorder: OutlineInputBorder(
@@ -40,24 +40,20 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      home: const MyHomePage(title: 'AI Career Guidance'),
+      home: const SplashScreen(),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-  final String title;
+class SplashScreen extends StatefulWidget {
+  const SplashScreen({super.key});
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _MyHomePageState extends State<MyHomePage>
+class _SplashScreenState extends State<SplashScreen>
     with TickerProviderStateMixin {
-  final _ipformkey = GlobalKey<FormState>();
-  final TextEditingController _ipcontroller = TextEditingController();
-
   late final AnimationController _waveController = AnimationController(
     vsync: this,
     duration: const Duration(seconds: 6),
@@ -69,10 +65,30 @@ class _MyHomePageState extends State<MyHomePage>
   )..forward();
 
   @override
+  void initState() {
+    super.initState();
+    _setUrlAndNavigate();
+  }
+
+  Future<void> _setUrlAndNavigate() async {
+    SharedPreferences sh = await SharedPreferences.getInstance();
+    await sh.setString(
+      "url",
+      "https://nextleap-ai-powered-career-guidance.onrender.com",
+    );
+
+    // Wait 5 seconds then go to Login page
+    await Future.delayed(const Duration(seconds: 5));
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => LoginApp()),
+    );
+  }
+
+  @override
   void dispose() {
     _waveController.dispose();
     _fadeController.dispose();
-    _ipcontroller.dispose();
     super.dispose();
   }
 
@@ -81,7 +97,7 @@ class _MyHomePageState extends State<MyHomePage>
     return Scaffold(
       body: Stack(
         children: [
-          // Background with bluish ash dominant gradient
+          // Background gradient + wave
           AnimatedBuilder(
             animation: _waveController,
             builder: (context, child) {
@@ -92,165 +108,89 @@ class _MyHomePageState extends State<MyHomePage>
             },
           ),
 
-          // Glass Card
+          // Glassmorphic Card
           SafeArea(
             child: Center(
-              child: SingleChildScrollView(
-                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 40),
-                child: FadeTransition(
-                  opacity: _fadeController,
-                  child: SlideTransition(
-                    position: Tween<Offset>(
-                      begin: const Offset(0, 0.2),
-                      end: Offset.zero,
-                    ).animate(CurvedAnimation(
-                      parent: _fadeController,
-                      curve: Curves.easeOut,
-                    )),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(25),
-                      child: BackdropFilter(
-                        filter: ImageFilter.blur(sigmaX: 18, sigmaY: 18),
-                        child: Container(
-                          padding: const EdgeInsets.all(28),
-                          decoration: BoxDecoration(
-                            color: Colors.white.withOpacity(0.15),
-                            borderRadius: BorderRadius.circular(25),
-                            border: Border.all(
-                              color: Colors.white.withOpacity(0.4),
-                              width: 1.5,
+              child: FadeTransition(
+                opacity: _fadeController,
+                child: SlideTransition(
+                  position: Tween<Offset>(
+                    begin: const Offset(0, 0.2),
+                    end: Offset.zero,
+                  ).animate(CurvedAnimation(
+                    parent: _fadeController,
+                    curve: Curves.easeOut,
+                  )),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(25),
+                    child: BackdropFilter(
+                      filter: ImageFilter.blur(sigmaX: 18, sigmaY: 18),
+                      child: Container(
+                        padding: const EdgeInsets.all(28),
+                        decoration: BoxDecoration(
+                          color: Colors.white.withOpacity(0.15),
+                          borderRadius: BorderRadius.circular(25),
+                          border: Border.all(
+                            color: Colors.white.withOpacity(0.4),
+                            width: 1.5,
+                          ),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.25),
+                              blurRadius: 20,
+                              offset: const Offset(0, 8),
                             ),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withOpacity(0.25),
-                                blurRadius: 20,
-                                offset: const Offset(0, 8),
-                              ),
-                            ],
-                          ),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              // Logo
-                              Container(
-                                padding: const EdgeInsets.all(16),
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  gradient: const LinearGradient(
-                                    colors: [Color(0xFF8B1E3F), Color(0xFF2C3145)],
-                                    begin: Alignment.topLeft,
-                                    end: Alignment.bottomRight,
+                          ],
+                        ),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            // Logo
+                            Container(
+                              padding: const EdgeInsets.all(16),
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                gradient: const LinearGradient(
+                                  colors: [Color(0xFF8B1E3F), Color(0xFF2C3145)],
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
+                                ),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black.withOpacity(0.3),
+                                    blurRadius: 12,
                                   ),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.black.withOpacity(0.3),
-                                      blurRadius: 12,
-                                    ),
-                                  ],
-                                ),
-                                child: const Icon(Icons.school,
-                                    size: 55, color: Colors.white),
+                                ],
                               ),
-                              const SizedBox(height: 22),
+                              child: const Icon(Icons.school,
+                                  size: 55, color: Colors.white),
+                            ),
+                            const SizedBox(height: 22),
 
-                              // Title
-                              Text(
-                                widget.title,
-                                style: const TextStyle(
-                                  fontSize: 26,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white,
-                                  letterSpacing: 1,
-                                ),
-                                textAlign: TextAlign.center,
+                            // App Name
+                            const Text(
+                              "NextLeap",
+                              style: TextStyle(
+                                fontSize: 28,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                                letterSpacing: 1,
                               ),
-                              const SizedBox(height: 12),
-                              const Text(
-                                "Enter your server IP address to continue",
-                                style: TextStyle(
-                                  fontSize: 15,
-                                  color: Colors.white70,
-                                ),
-                                textAlign: TextAlign.center,
-                              ),
-                              const SizedBox(height: 28),
+                              textAlign: TextAlign.center,
+                            ),
+                            const SizedBox(height: 12),
 
-                              // Form
-                              Form(
-                                key: _ipformkey,
-                                child: Column(
-                                  children: [
-                                    TextFormField(
-                                      controller: _ipcontroller,
-                                      keyboardType: TextInputType.url,
-                                      decoration: const InputDecoration(
-                                        labelText:
-                                        "IP Address (e.g. 192.168.1.12:8002)",
-                                        prefixIcon: Icon(
-                                          Icons.cloud_outlined,
-                                          color: Color(0xFF8B1E3F),
-                                        ),
-                                      ),
-                                      validator: (value) {
-                                        if (value == null || value.isEmpty) {
-                                          return "IP Address is required";
-                                        }
-                                        final ipPortRegex = RegExp(
-                                            r'^(?:[0-9]{1,3}\.){3}[0-9]{1,3}(?::\d{1,5})?$');
-                                        if (!ipPortRegex.hasMatch(value)) {
-                                          return "Enter a valid IP (e.g. 192.168.1.12:8002)";
-                                        }
-                                        return null;
-                                      },
-                                    ),
-                                    const SizedBox(height: 28),
-
-                                    // Themed Button
-                                    SizedBox(
-                                      width: double.infinity,
-                                      child: ElevatedButton(
-                                        style: ElevatedButton.styleFrom(
-                                          backgroundColor:
-                                          const Color(0xFF8B1E3F), // Maroon
-                                          padding: const EdgeInsets.symmetric(
-                                              vertical: 16),
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                            BorderRadius.circular(16),
-                                          ),
-                                          elevation: 8,
-                                        ),
-                                        onPressed: () async {
-                                          if (_ipformkey.currentState!
-                                              .validate()) {
-                                            SharedPreferences sh =
-                                            await SharedPreferences
-                                                .getInstance();
-                                            String url = _ipcontroller.text;
-                                            sh.setString('url', 'http://$url');
-                                            Navigator.pushReplacement(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                  const LoginApp()),
-                                            );
-                                          }
-                                        },
-                                        child: const Text(
-                                          "Continue",
-                                          style: TextStyle(
-                                            fontSize: 17,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.white,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
+                            // Subtext
+                            const Text(
+                              "AI-powered Career Guidance &\nAdmission Chance Predictor",
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.white70,
+                                height: 1.4,
                               ),
-                            ],
-                          ),
+                              textAlign: TextAlign.center,
+                            ),
+                          ],
                         ),
                       ),
                     ),
@@ -265,7 +205,7 @@ class _MyHomePageState extends State<MyHomePage>
   }
 }
 
-/// Bluish ash dominant Wave Painter
+/// Gradient + Wave Background Painter
 class ModernWavePainter extends CustomPainter {
   final double progress;
   ModernWavePainter({required this.progress});
@@ -274,11 +214,11 @@ class ModernWavePainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     final gradient = const LinearGradient(
       colors: [
-        Color(0xFF2C3145), // Primary bluish ash
-        Color(0xFF3D405B), // Secondary ash
-        Color(0xFF8B1E3F), // Maroon accent
+        Color(0xFF2C3145),
+        Color(0xFF3D405B),
+        Color(0xFF8B1E3F),
       ],
-      stops: [0.0, 0.7, 1.0], // 70% ash, 30% maroon
+      stops: [0.0, 0.7, 1.0],
       begin: Alignment.topLeft,
       end: Alignment.bottomRight,
     );
@@ -288,7 +228,7 @@ class ModernWavePainter extends CustomPainter {
 
     canvas.drawRect(rect, backgroundPaint);
 
-    // Animated wave
+    // Wave
     final wavePaint = Paint()
       ..color = Colors.white.withOpacity(0.18)
       ..style = PaintingStyle.fill;

@@ -14,7 +14,13 @@ import os
 import dj_database_url
 from pathlib import Path
 
+from supabase import create_client
+import os
 
+SUPABASE_URL = os.getenv("SUPABASE_URL", "https://ztaqoxpshgqhjwubztdw.supabase.co")
+SUPABASE_KEY = os.getenv("SUPABASE_KEY", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp0YXFveHBzaGdxaGp3dWJ6dGR3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTcyMjgzNjYsImV4cCI6MjA3MjgwNDM2Nn0.xh1h3LVlbZ795G_1Vh4_AHNyl7HYvVnBxKMukVjCBB0")
+
+supabase = create_client(SUPABASE_URL, SUPABASE_KEY)
 
   # this will read your .env file
 
@@ -85,7 +91,7 @@ WSGI_APPLICATION = 'CareerGuidanceandCollegeAdmissionChancesPredictionSystem.wsg
 
 DATABASES = {
     'default': dj_database_url.config(
-        default=os.environ.get('DATABASE_URL')
+        default='postgresql://postgres.ztaqoxpshgqhjwubztdw:Gouri%401902@aws-1-ap-south-1.pooler.supabase.com:6543/postgres'
     )
 }
 
