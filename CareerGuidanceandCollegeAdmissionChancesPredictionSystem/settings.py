@@ -17,14 +17,10 @@ from pathlib import Path
 from supabase import create_client
 import os
 
-SUPABASE_URL = os.getenv("SUPABASE_URL", "https://ztaqoxpshgqhjwubztdw.supabase.co")
-SUPABASE_KEY = os.getenv("SUPABASE_KEY", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp0YXFveHBzaGdxaGp3dWJ6dGR3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTcyMjgzNjYsImV4cCI6MjA3MjgwNDM2Nn0.xh1h3LVlbZ795G_1Vh4_AHNyl7HYvVnBxKMukVjCBB0")
-
-supabase = create_client(SUPABASE_URL, SUPABASE_KEY)
-
-  # this will read your .env file
-
-
+SUPABASE_URL = "https://ztaqoxpshgqhjwubztdw.supabase.co"
+SUPABASE_SERVICE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp0YXFveHBzaGdxaGp3dWJ6dGR3Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc1NzIyODM2NiwiZXhwIjoyMDcyODA0MzY2fQ.y8QDJmbpdTF_T9xyqlrnB-a6T86zeVuBq9Tpe-10f5s"
+# Create Supabase client
+# supabase = create_client(SUPABASE_URL, SUPABASE_KEY)
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 

@@ -1,3 +1,4 @@
+import uuid
 from django.db.models import Sum
 import json
 import random
@@ -14,6 +15,10 @@ from guidanceapp.models import *
 from django.contrib.auth.hashers import check_password, make_password
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
+from supabase import create_client
+from django.conf import settings
+
+supabase = create_client(settings.SUPABASE_URL, settings.SUPABASE_SERVICE_KEY)
 
 # Create your views here.
 
@@ -529,53 +534,117 @@ def getcourses(request):
             'cid': i.pk,
         })
     return JsonResponse({'status': 'success', 'data': data})
+# from django.http import JsonResponse
+# from django.contrib.auth.models import User, Group
+# from django.contrib.auth.hashers import make_password
+# from django.conf import settings
+# from .models import UserProfile
+
+# def sreg(request):
+#     username = request.POST['uname']
+#     pwd = request.POST['pwd']
+#     name = request.POST['name']
+#     gender = request.POST['gender']
+#     place = request.POST['place']
+#     post = request.POST['post']
+#     pin = request.POST['pin']
+#     course = request.POST['course_id']
+#     email = request.POST['email']
+#     phone = request.POST['phone']
+#     image = request.FILES.get('image')
+
+#     public_url = None
+#     if image:
+#         # Upload to Supabase bucket (example: "user-images")
+#         file_path = f"students/{image.name}"
+#         settings.supabase.storage.from_("user-images").upload(file_path, image.read())
+#         public_url = settings.supabase.storage.from_("user-images").get_public_url(file_path)
+
+#     # Create Django user
+#     u = User.objects.create(username=username, password=make_password(pwd))
+#     u.groups.add(Group.objects.get(name='Student'))
+
+#     # Save profile with Supabase image URL
+#     c = UserProfile(
+#         name=name,
+#         gender=gender,
+#         place=place,
+#         post=post,
+#         pin=pin,
+#         email=email,
+#         phone=phone,
+#         image=public_url,   # ✅ use Supabase public URL
+#         status='pending',
+#         course_id=course,
+#         user_id=u.id
+#     )
+#     c.save()
+
+#     return JsonResponse({'status': 'success'})
+
 from django.http import JsonResponse
 from django.contrib.auth.models import User, Group
 from django.contrib.auth.hashers import make_password
 from django.conf import settings
-from .models import UserProfile
+from .models import UserProfile, Course
+from supabase import create_client
+import traceback
+
+# Supabase client
+supabase = create_client(settings.SUPABASE_URL, settings.SUPABASE_SERVICE_KEY)
 
 def sreg(request):
-    username = request.POST['uname']
-    pwd = request.POST['pwd']
-    name = request.POST['name']
-    gender = request.POST['gender']
-    place = request.POST['place']
-    post = request.POST['post']
-    pin = request.POST['pin']
-    course = request.POST['course_id']
-    email = request.POST['email']
-    phone = request.POST['phone']
-    image = request.FILES.get('image')
+    if request.method != 'POST':
+        return JsonResponse({'status': 'error', 'message': 'Invalid request'}, status=400)
 
-    public_url = None
-    if image:
-        # Upload to Supabase bucket (example: "user-images")
-        file_path = f"students/{image.name}"
-        settings.supabase.storage.from_("user-images").upload(file_path, image.read())
-        public_url = settings.supabase.storage.from_("user-images").get_public_url(file_path)
+    try:
+        # --- User Data ---
+        username = request.POST.get('uname')
+        pwd = request.POST.get('pwd')
+        name = request.POST.get('name')
+        gender = request.POST.get('gender')
+        place = request.POST.get('place')
+        post = request.POST.get('post')
+        pin = request.POST.get('pin')
+        course_id = request.POST.get('course_id')
+        email = request.POST.get('email')
+        phone = request.POST.get('phone')
 
-    # Create Django user
-    u = User.objects.create(username=username, password=make_password(pwd))
-    u.groups.add(Group.objects.get(name='Student'))
+        # --- Profile Image ---
+        image_file = request.FILES.get('image')
+        image_url = None
 
-    # Save profile with Supabase image URL
-    c = UserProfile(
-        name=name,
-        gender=gender,
-        place=place,
-        post=post,
-        pin=pin,
-        email=email,
-        phone=phone,
-        image=public_url,   # ✅ use Supabase public URL
-        status='pending',
-        course_id=course,
-        user_id=u.id
-    )
-    c.save()
+        if image_file:
+            filename = f"{uuid.uuid4()}_{image_file.name}"  # unique name
+            file_path = f"students/{filename}"
+            supabase.storage.from_("user-images").upload(file_path, image_file.read())
+            image_url = supabase.storage.from_("user-images").get_public_url(file_path)
 
-    return JsonResponse({'status': 'success'})
+        # --- Create Django User ---
+        u = User.objects.create(username=username, password=make_password(pwd))
+        u.groups.add(Group.objects.get(name='Student'))
+
+        # --- Save UserProfile ---
+        profile = UserProfile(
+            user=u,
+            name=name,
+            gender=gender,
+            place=place,
+            post=post,
+            pin=int(pin),
+            phone=int(phone),
+            email=email,
+            image=image_url,
+            course=Course.objects.get(id=course_id),
+            status='pending'
+        )
+        profile.save()
+
+        return JsonResponse({'status': 'success', 'image_url': image_url})
+
+    except Exception as e:
+        print(traceback.format_exc())
+        return JsonResponse({'status': 'error', 'message': str(e)}, status=500)
 
 
 from django.contrib.auth.models import User, Group
@@ -593,7 +662,7 @@ from .models import Parent, UserProfile
 #             'name': i.name,
 #             'place': i.place,
 #             'email': i.email,
-#             'photo': i.image.name,
+#             'photo': i.image,
 #         })
 
 #     username = request.POST['uname']
@@ -652,42 +721,111 @@ def get_students(request):
             'name': i.name,
             'place': i.place,
             'email': i.email,
-            'photo': i.image.name if i.image else '',
+            'photo': i.image if i.image else '',
         })
     return JsonResponse({'status': 'success', 'students': data})
 
 
+# def preg(request):
+#     username = request.POST['uname']
+#     pwd = request.POST['pwd']
+#     name = request.POST['name']
+#     place = request.POST['place']
+#     email = request.POST['email']
+#     phone = request.POST['phone']
+#     sid = request.POST['sid']
+
+#     image = request.FILES.get('proof_pdf')
+#     saved_path = None
+#     if image:
+#         fs = FileSystemStorage()
+#         saved_path = fs.save(image.name, image)
+
+#     u = User.objects.create(username=username, password=make_password(pwd))
+#     u.groups.add(Group.objects.get(name='Parent'))
+#     print(username, pwd,'iiiiiiiiiiiiiiiiiiiiiiiiiiii')
+
+#     c = Parent(
+#         name=name,
+#         place=place,
+#         email=email,
+#         phone=phone,
+#         proof=saved_path,
+#         student_id=sid,
+#         user_id=u.id
+#     )
+#     c.save()
+
+#     return JsonResponse({'status': 'success'})
+
+import uuid
+import traceback
+from django.contrib.auth.models import User, Group
+from django.contrib.auth.hashers import make_password
+from django.http import JsonResponse
+from guidanceapp.models import Parent, UserProfile
+from supabase import create_client
+import os
+
+# ---------------- SUPABASE ----------------
+SUPABASE_URL = "https://ztaqoxpshgqhjwubztdw.supabase.co"
+SUPABASE_SERVICE_KEY = "<your-service-role-key>"  # must have Storage write permissions
+supabase = create_client(SUPABASE_URL, SUPABASE_SERVICE_KEY)
+supabase = create_client(settings.SUPABASE_URL, settings.SUPABASE_SERVICE_KEY)
+
+# ---------------- Parent Registration ----------------
 def preg(request):
-    username = request.POST['uname']
-    pwd = request.POST['pwd']
-    name = request.POST['name']
-    place = request.POST['place']
-    email = request.POST['email']
-    phone = request.POST['phone']
-    sid = request.POST['sid']
+    if request.method != 'POST':
+        return JsonResponse({'status': 'error', 'message': 'Invalid request'}, status=400)
 
-    image = request.FILES.get('proof_pdf')
-    saved_path = None
-    if image:
-        fs = FileSystemStorage()
-        saved_path = fs.save(image.name, image)
+    try:
+        # --- User Data ---
+        username = request.POST.get('uname')
+        pwd = request.POST.get('pwd')
+        name = request.POST.get('name')
+        place = request.POST.get('place')
+        email = request.POST.get('email')
+        phone = request.POST.get('phone')
+        sid = request.POST.get('sid')  # associated student id
 
-    u = User.objects.create(username=username, password=make_password(pwd))
-    u.groups.add(Group.objects.get(name='Parent'))
-    print(username, pwd,'iiiiiiiiiiiiiiiiiiiiiiiiiiii')
+        # --- PDF Proof ---
+        proof_file = request.FILES.get('proof_pdf')
+        proof_url = None
 
-    c = Parent(
-        name=name,
-        place=place,
-        email=email,
-        phone=phone,
-        proof=saved_path,
-        student_id=sid,
-        user_id=u.id
-    )
-    c.save()
+        if proof_file:
+            # Generate unique filename
+            filename = f"{uuid.uuid4()}_{proof_file.name}"
+            file_path = f"parent-proofs/{filename}"  # folder in Supabase bucket "user-docs"
 
-    return JsonResponse({'status': 'success'})
+            # Upload to Supabase
+            supabase.storage.from_("user-docs").upload(file_path, proof_file.read())
+
+            # Get public URL
+            proof_url = supabase.storage.from_("user-docs").get_public_url(file_path)
+
+
+        # --- Create Django User ---
+        u = User.objects.create(username=username, password=make_password(pwd))
+        u.groups.add(Group.objects.get(name='Parent'))
+
+        # --- Save Parent Profile ---
+        parent_profile = Parent(
+            name=name,
+            place=place,
+            email=email,
+            phone=int(phone),
+            proof=proof_url,       # store Supabase public URL
+            student_id=sid,
+            user_id=u.id
+        )
+        parent_profile.save()
+
+        return JsonResponse({'status': 'success', 'proof_url': proof_url})
+
+    except Exception as e:
+        print(traceback.format_exc())
+        return JsonResponse({'status': 'error', 'message': str(e)}, status=500)
+
 
 def viewscollege(request):
     data=[]
@@ -700,7 +838,7 @@ def viewscollege(request):
             'p':i.place,
             'e':i.email,
             'ph':i.phone,
-            'pr':i.proof.name,
+            'pr':i.proof,
         })
         print(data)
 
@@ -796,7 +934,7 @@ def applogin(request):
                             'status': 'welcome to home screen',
                             'type': 'Student',
                             'uid': u.id,
-                            'uimg': u.image.name,
+                            'uimg': u.image,
                         }
                     else:
                         response = { 'status': 'Account not yet verified by the admin' }
@@ -861,7 +999,7 @@ def studentprofile(request):
             'pin': student.pin,
             'phone': student.phone,
             'email': student.email,
-            'image': student.image.name,
+            'image': student.image,
         }]
         return JsonResponse({'status': 'success', 'data': data})
     except UserProfile.DoesNotExist:
@@ -881,10 +1019,14 @@ def editsreg(request):
         student.email = request.POST['email']
 
         if 'image' in request.FILES:
-            image = request.FILES['image']
-            fs = FileSystemStorage()
-            saved_path = fs.save(image.name, image)
-            student.image = saved_path
+            image_url = None
+            image_file = request.FILES['image']
+            filename = f"{uuid.uuid4()}_{image_file.name}"  # unique name
+            file_path = f"students/{filename}"
+            supabase.storage.from_("user-images").upload(file_path, image_file.read())
+            image_url = supabase.storage.from_("user-images").get_public_url(file_path)
+            student.image = image_url
+
 
         student.save()
         print(uid)
@@ -908,7 +1050,7 @@ def parentprofile(request):
         'pl':r.place,
         's':r.student.name,
         'sid':r.student.pk,
-        'proof_pdf':r.proof.name,
+        'proof_pdf':r.proof,
     })
 
     responce ={
@@ -916,40 +1058,49 @@ def parentprofile(request):
     }
     return JsonResponse(responce)
 
+
 def editpreg(request):
-        data=[]
-        d=UserProfile.objects.all()
-        for i in d:
-            data.append({
-                'sname':i.name,
-                'place':i.place,
-            })
-        
-        uid = request.POST['uid']
-        h=Parent.objects.get(id=uid)
-        h.name = request.POST['name']
-        h.place = request.POST['place']
-        h.email = request.POST['email']
-        h.phone = request.POST['phone']
-        try:
-                    h.student_id=request.POST['sid']
-        except:
-            pass
-        try:
-            image = request.FILES.get('proof_pdf')
-            fs=FileSystemStorage()
-            saved_path=fs.save(image.name,image)
-            h.proof=saved_path
-        except:
-            pass
-        h.save()
-        response={
-            'status':'success',
-            'students':data
-        }
-        return JsonResponse(response)
+    data = []
+    d = UserProfile.objects.all()
+    for i in d:
+        data.append({
+            'sname': i.name,
+            'place': i.place,
+        })
+    
+    uid = request.POST['uid']
+    h = Parent.objects.get(id=uid)
+    h.name = request.POST['name']
+    h.place = request.POST['place']
+    h.email = request.POST['email']
+    h.phone = request.POST['phone']
+    try:
+        h.student_id = request.POST['sid']
+    except:
+        pass
 
+    try:
+        file = request.FILES.get('proof_pdf')
+        if file:
+            # Upload PDF to Supabase
+            file_name = f"parent-proofs/{uuid.uuid4()}_{file.name}"
+            supabase.storage.from_("user-docs").upload(file_name, file.read())
+            url = supabase.storage.from_("user-docs").get_public_url(file_name)
+            h.proof = url  # Store the full public URL
+        else:
+            # Keep old PDF if no new file uploaded
+            old_pdf = request.POST.get('old_pdf')
+            if old_pdf:
+                h.proof = old_pdf
+    except Exception as e:
+        print("PDF upload error:", e)
 
+    h.save()
+    response = {
+        'status': 'success',
+        'students': data
+    }
+    return JsonResponse(response)
 
 
 def pstudent(request):
@@ -965,7 +1116,7 @@ def pstudent(request):
             'pin': student.pin,
             'phone': student.phone,
             'email': student.email,
-            'image': student.image.name if student.image else None,
+            'image': student.image if student.image else None,
         })
 
     response={
@@ -1386,14 +1537,99 @@ def submit_answer(request):
     except Exception as e:
         return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-import pandas as pd
-from django.http import JsonResponse
-from guidanceapp.Geminiapi import gpt_course_classifier
-import mysql.connector
-from django.http import JsonResponse
-import mysql.connector
-import pandas as pd
-from guidanceapp.Geminiapi import gpt_course_classifier
+# import pandas as pd
+# from django.http import JsonResponse
+# from guidanceapp.Geminiapi import gpt_course_classifier
+# import mysql.connector
+# from django.http import JsonResponse
+# import mysql.connector
+# import pandas as pd
+# from guidanceapp.Geminiapi import gpt_course_classifier
+
+# # def admission_prediction(request):
+# #     if request.method != "POST":
+# #         return JsonResponse({"error": "POST request required"}, status=400)
+    
+# #     data = request.POST
+# #     try:
+# #         student_marks = float(data.get("marks"))
+# #         student_stream = data.get("stream").strip().lower()
+# #     except (TypeError, ValueError):
+# #         return JsonResponse({"error": "Invalid marks or stream"}, status=400)
+
+# #     db = mysql.connector.connect(
+# #         host="localhost",
+# #         user="root",
+# #         password="",
+# #         database="CareerGuidanceandCollegeAdmissionChancesPredictionSystem"
+# #     )
+# #     cursor = db.cursor(dictionary=True)
+
+# #     # Fetch courses
+# #     cursor.execute("""
+# #         SELECT c.id as course_id, c.course as course_name, d.department as department_name
+# #         FROM guidanceapp_course c
+# #         JOIN guidanceapp_department d ON c.department_id = d.id
+# #     """)
+# #     courses = cursor.fetchall()
+# #     course_list = [{"course_id": c["course_id"], "course_name": c["course_name"]} for c in courses]
+
+# #     # Classify courses by stream
+# #     stream_map = gpt_course_classifier(course_list)
+# #     if student_stream not in stream_map:
+# #         return JsonResponse({"error": "Invalid stream entered"}, status=400)
+
+# #     allowed_course_ids = stream_map[student_stream]
+
+# #     # Fetch last admission data
+# #     query = """
+# #         SELECT lad.id, lad.marks_starting, lad.marks_ending, 
+# #                c.id as course_id, c.course, d.department, col.name
+# #         FROM guidanceapp_lastadmissiondetails lad
+# #         JOIN guidanceapp_courserequest cr ON lad.course_request_id = cr.id
+# #         JOIN guidanceapp_course c ON cr.course_id = c.id
+# #         JOIN guidanceapp_department d ON c.department_id = d.id
+# #         JOIN guidanceapp_college col ON cr.college_id = col.id
+# #     """
+# #     cursor.execute(query)
+# #     data = cursor.fetchall()
+# #     df = pd.DataFrame(data)
+
+# #     # Filter courses by stream
+# #     filtered_df = df[df['course_id'].isin(allowed_course_ids)].copy()
+# #     if filtered_df.empty:
+# #         return JsonResponse({"error": "No courses found for this stream"}, status=404)
+
+# #     # Prepare available courses
+# #     unique_courses = filtered_df[['course_id', 'course']].drop_duplicates()
+# #     courses_list = [{"course_id": row.course_id, "course_name": row.course} 
+# #                     for row in unique_courses.itertuples(index=False)]
+
+# #     # Chance calculation
+# #     def calculate_chance(row):
+# #         start = row['marks_starting']
+# #         end = row['marks_ending']
+# #         if student_marks >= end:
+# #             return 100.0
+# #         elif student_marks >= start:
+# #             return 90.0 + (student_marks - start) / (end - start) * 10
+# #         else:
+# #             diff = start - student_marks
+# #             return max(0, 70 - diff * 5)
+
+# #     filtered_df['chance'] = filtered_df.apply(calculate_chance, axis=1)
+# #     final_df = filtered_df.sort_values(by="chance", ascending=False)
+
+# #     results = [
+# #         {"college": row['name'], "course": row['course'], "chance": round(row['chance'], 2)}
+# #         for _, row in final_df.iterrows()
+# #     ]
+
+# #     return JsonResponse({
+# #         "available_courses": courses_list,   # Important: send available courses
+# #         "predictions": results
+# #     })
+
 
 # def admission_prediction(request):
 #     if request.method != "POST":
@@ -1403,6 +1639,7 @@ from guidanceapp.Geminiapi import gpt_course_classifier
 #     try:
 #         student_marks = float(data.get("marks"))
 #         student_stream = data.get("stream").strip().lower()
+#         selected_course_id = data.get("course_id")  # <-- new optional field
 #     except (TypeError, ValueError):
 #         return JsonResponse({"error": "Invalid marks or stream"}, status=400)
 
@@ -1449,6 +1686,12 @@ from guidanceapp.Geminiapi import gpt_course_classifier
 #     if filtered_df.empty:
 #         return JsonResponse({"error": "No courses found for this stream"}, status=404)
 
+#     # Filter by selected course if provided
+#     if selected_course_id:
+#         filtered_df = filtered_df[filtered_df['course_id'] == int(selected_course_id)]
+#         if filtered_df.empty:
+#             return JsonResponse({"error": "Selected course not found in this stream"}, status=404)
+
 #     # Prepare available courses
 #     unique_courses = filtered_df[['course_id', 'course']].drop_duplicates()
 #     courses_list = [{"course_id": row.course_id, "course_name": row.course} 
@@ -1470,86 +1713,92 @@ from guidanceapp.Geminiapi import gpt_course_classifier
 #     final_df = filtered_df.sort_values(by="chance", ascending=False)
 
 #     results = [
-#         {"college": row['name'], "course": row['course'], "chance": round(row['chance'], 2)}
+#         {
+#             "college": row['name'],
+#             "course": row['course'],
+#             "chance": round(row['chance'], 2),
+#             "course_id": row['course_id']  # <-- include course_id
+#         }
 #         for _, row in final_df.iterrows()
 #     ]
 
 #     return JsonResponse({
-#         "available_courses": courses_list,   # Important: send available courses
+#         "available_courses": courses_list,
 #         "predictions": results
 #     })
 
 
+from django.http import JsonResponse
+from django.db import connection
+import pandas as pd
+
 def admission_prediction(request):
     if request.method != "POST":
         return JsonResponse({"error": "POST request required"}, status=400)
-    
+
     data = request.POST
     try:
         student_marks = float(data.get("marks"))
         student_stream = data.get("stream").strip().lower()
-        selected_course_id = data.get("course_id")  # <-- new optional field
+        selected_course_id = data.get("course_id")  # optional
     except (TypeError, ValueError):
         return JsonResponse({"error": "Invalid marks or stream"}, status=400)
 
-    db = mysql.connector.connect(
-        host="localhost",
-        user="root",
-        password="",
-        database="CareerGuidanceandCollegeAdmissionChancesPredictionSystem"
-    )
-    cursor = db.cursor(dictionary=True)
+    # --- Fetch courses ---
+    with connection.cursor() as cursor:
+        cursor.execute("""
+            SELECT c.id as course_id, c.course as course_name, d.department as department_name
+            FROM guidanceapp_course c
+            JOIN guidanceapp_department d ON c.department_id = d.id
+        """)
+        courses = cursor.fetchall()
 
-    # Fetch courses
-    cursor.execute("""
-        SELECT c.id as course_id, c.course as course_name, d.department as department_name
-        FROM guidanceapp_course c
-        JOIN guidanceapp_department d ON c.department_id = d.id
-    """)
-    courses = cursor.fetchall()
-    course_list = [{"course_id": c["course_id"], "course_name": c["course_name"]} for c in courses]
+    course_list = [{"course_id": c[0], "course_name": c[1]} for c in courses]
 
-    # Classify courses by stream
+    # --- Classify courses ---
     stream_map = gpt_course_classifier(course_list)
     if student_stream not in stream_map:
         return JsonResponse({"error": "Invalid stream entered"}, status=400)
 
     allowed_course_ids = stream_map[student_stream]
 
-    # Fetch last admission data
-    query = """
-        SELECT lad.id, lad.marks_starting, lad.marks_ending, 
-               c.id as course_id, c.course, d.department, col.name
-        FROM guidanceapp_lastadmissiondetails lad
-        JOIN guidanceapp_courserequest cr ON lad.course_request_id = cr.id
-        JOIN guidanceapp_course c ON cr.course_id = c.id
-        JOIN guidanceapp_department d ON c.department_id = d.id
-        JOIN guidanceapp_college col ON cr.college_id = col.id
-    """
-    cursor.execute(query)
-    data = cursor.fetchall()
-    df = pd.DataFrame(data)
+    # --- Fetch last admission data ---
+    with connection.cursor() as cursor:
+        cursor.execute("""
+            SELECT lad.id, lad.marks_starting, lad.marks_ending, 
+                   c.id as course_id, c.course, d.department, col.name
+            FROM guidanceapp_lastadmissiondetails lad
+            JOIN guidanceapp_courserequest cr ON lad.course_request_id = cr.id
+            JOIN guidanceapp_course c ON cr.course_id = c.id
+            JOIN guidanceapp_department d ON c.department_id = d.id
+            JOIN guidanceapp_college col ON cr.college_id = col.id
+        """)
+        data = cursor.fetchall()
 
-    # Filter courses by stream
+    df = pd.DataFrame(data, columns=[
+        "id", "marks_starting", "marks_ending",
+        "course_id", "course", "department", "name"
+    ])
+
+    # --- Filter courses by stream ---
     filtered_df = df[df['course_id'].isin(allowed_course_ids)].copy()
     if filtered_df.empty:
         return JsonResponse({"error": "No courses found for this stream"}, status=404)
 
-    # Filter by selected course if provided
+    # --- Filter by selected course if provided ---
     if selected_course_id:
         filtered_df = filtered_df[filtered_df['course_id'] == int(selected_course_id)]
         if filtered_df.empty:
             return JsonResponse({"error": "Selected course not found in this stream"}, status=404)
 
-    # Prepare available courses
+    # --- Available courses ---
     unique_courses = filtered_df[['course_id', 'course']].drop_duplicates()
-    courses_list = [{"course_id": row.course_id, "course_name": row.course} 
+    courses_list = [{"course_id": row.course_id, "course_name": row.course}
                     for row in unique_courses.itertuples(index=False)]
 
-    # Chance calculation
+    # --- Chance calculation ---
     def calculate_chance(row):
-        start = row['marks_starting']
-        end = row['marks_ending']
+        start, end = row['marks_starting'], row['marks_ending']
         if student_marks >= end:
             return 100.0
         elif student_marks >= start:
@@ -1566,7 +1815,7 @@ def admission_prediction(request):
             "college": row['name'],
             "course": row['course'],
             "chance": round(row['chance'], 2),
-            "course_id": row['course_id']  # <-- include course_id
+            "course_id": row['course_id']
         }
         for _, row in final_df.iterrows()
     ]
@@ -1575,5 +1824,3 @@ def admission_prediction(request):
         "available_courses": courses_list,
         "predictions": results
     })
-
-

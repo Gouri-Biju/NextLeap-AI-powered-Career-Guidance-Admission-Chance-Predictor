@@ -74,7 +74,7 @@ class _SplashScreenState extends State<SplashScreen>
     SharedPreferences sh = await SharedPreferences.getInstance();
     await sh.setString(
       "url",
-      "https://nextleap-ai-powered-career-guidance.onrender.com",
+      "http://192.168.29.230:8002",
     );
 
     // Wait 5 seconds then go to Login page

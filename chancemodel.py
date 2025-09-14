@@ -1,17 +1,19 @@
 import pandas as pd
-import mysql.connector
+import psycopg2
 from sklearn.preprocessing import LabelEncoder
 from sklearn.ensemble import RandomForestRegressor
 import joblib
 
-# Connect to DB and fetch last admission details
-db = mysql.connector.connect(
-    host="localhost",
-    user="root",
-    password="",
-    database="CareerGuidanceandCollegeAdmissionChancesPredictionSystem"
+# ------------------------------
+# Connect to Supabase PostgreSQL
+# ------------------------------
+conn = psycopg2.connect(
+    host="aws-1-ap-south-1.pooler.supabase.com",
+    port=6543,
+    database="postgres",
+    user="postgres.ztaqoxpshgqhjwubztdw",
+    password="Gouri@1902"
 )
-cursor = db.cursor(dictionary=True)
 
 query = """
 SELECT lad.id, lad.marks_starting, lad.marks_ending, 
@@ -22,15 +24,13 @@ JOIN guidanceapp_course c ON cr.course_id = c.id
 JOIN guidanceapp_department d ON c.department_id = d.id
 JOIN guidanceapp_college col ON cr.college_id = col.id
 """
-cursor.execute(query)
-data = cursor.fetchall()
-df = pd.DataFrame(data)
 
-# Mapping stream to courses
-def course_list_parsing(data, users_course):
+df = pd.read_sql(query, conn)
+conn.close()
 
-    stream_to_courses = data
-
+# ------------------------------
+# Generate admission chance
+# ------------------------------
 def generate_admission_chance(row, marks):
     start = row['marks_starting']
     end = row['marks_ending']
@@ -42,6 +42,9 @@ def generate_admission_chance(row, marks):
         diff = start - marks
         return max(0, 70 - diff * 5)
 
+# ------------------------------
+# Train the RandomForest model
+# ------------------------------
 def train_model():
     rows = []
     for idx, row in df.iterrows():
@@ -76,6 +79,9 @@ def train_model():
 
     print("Model trained and saved!")
 
+# ------------------------------
+# Predict admission chance
+# ------------------------------
 def predict(marks, course, college):
     model = joblib.load('admission_model.pkl')
     le_course = joblib.load('le_course.pkl')
@@ -97,6 +103,19 @@ def predict(marks, course, college):
     chance = model.predict(features)[0]
     return chance
 
+# ------------------------------
+# Stream to courses mapping (example)
+# ------------------------------
+# You can adjust this mapping based on your own logic or GPT classifier
+stream_to_courses = {
+    "science": ["Physics", "Chemistry", "Biology", "Computer Science"],
+    "commerce": ["Accounting", "Economics", "Business Studies"],
+    "humanities": ["History", "Political Science", "Psychology"]
+}
+
+# ------------------------------
+# Main
+# ------------------------------
 if __name__ == "__main__":
     # Train model first (run only once or when data updates)
     train_model()

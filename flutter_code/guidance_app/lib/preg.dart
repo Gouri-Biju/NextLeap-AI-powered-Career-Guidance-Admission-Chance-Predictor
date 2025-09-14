@@ -137,7 +137,7 @@ class _ParentRegAppState extends State<ParentRegApp>
                                   filteredStudents[index]['photo'] !=
                                       ''
                                       ? NetworkImage(
-                                      "$baseUrl/static/media/${filteredStudents[index]['photo']}")
+                                      filteredStudents[index]['photo'])
                                       : null,
                                   child: filteredStudents[index]
                                   ['photo'] ==

@@ -117,7 +117,7 @@ class _StudentPageState extends State<StudentPage>
                       child: ClipOval(
                         child: userImage != null
                             ? Image.network(
-                          "$baseUrl/static/media/$userImage",
+                          userImage!,
                           width: 96,
                           height: 96,
                           fit: BoxFit.cover,

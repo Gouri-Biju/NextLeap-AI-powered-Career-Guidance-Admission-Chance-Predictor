@@ -19,7 +19,7 @@ class UserProfile(models.Model):
     pin = models.IntegerField()
     phone = models.BigIntegerField()
     email = models.CharField(max_length=100)
-    image = models.ImageField(upload_to='user_images/')
+    image = models.CharField(max_length=500)
     course=models.ForeignKey(Course, on_delete=models.CASCADE)
     status= models.CharField(max_length=50)
 
@@ -63,7 +63,7 @@ class Parent(models.Model):
     place = models.CharField(max_length=100)
     email = models.CharField(max_length=100)
     student = models.ForeignKey(UserProfile, on_delete=models.CASCADE)  
-    proof = models.FileField(upload_to='parent_proofs/')
+    proof = models.CharField(max_length=500, blank=True, null=True)
     phone = models.BigIntegerField()
 
 class Dataset(models.Model):

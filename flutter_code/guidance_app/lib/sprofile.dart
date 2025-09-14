@@ -192,7 +192,7 @@ class ViewProfileTab extends StatelessWidget {
                   radius: 50,
                   backgroundImage: profileData!['image'] != null
                       ? NetworkImage(
-                      "$baseUrl/static/media/${profileData!['image']}")
+                      profileData!['image'])
                       : null,
                   child: profileData!['image'] == null
                       ? const Icon(Icons.person,

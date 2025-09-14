@@ -63,6 +63,22 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
   final TextEditingController _uname = TextEditingController();
   final TextEditingController _pwd = TextEditingController();
 
+  @override
+  void initState() {
+    super.initState();
+    _setUrlAndNavigate();
+  }
+
+  Future<void> _setUrlAndNavigate() async {
+    SharedPreferences sh = await SharedPreferences.getInstance();
+    await sh.setString(
+      "url",
+      "http://192.168.29.230:8002",
+    );
+
+  }
+
+
   late final AnimationController _waveController = AnimationController(
     vsync: this,
     duration: const Duration(seconds: 6),

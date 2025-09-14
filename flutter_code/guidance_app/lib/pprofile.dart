@@ -71,7 +71,7 @@ class _ParentProfilePageState extends State<ParentProfilePage>
 
           // ✅ Assign pdfUrl here after profileData is fetched
           if (profileData!['proof_pdf'] != null && profileData!['proof_pdf'].isNotEmpty) {
-            pdfUrl = "$baseUrl/static/media/${profileData!['proof_pdf']}";
+            pdfUrl = profileData!['proof_pdf'];
           }
 
           _isLoading = false;
@@ -209,20 +209,22 @@ class ViewParentProfileTab extends StatelessWidget {
             ),
             Positioned(
               bottom: -50,
-              child: CircleAvatar(
+              child: profileData!['photo'] != null
+                  ? CircleAvatar(
                 radius: 55,
                 backgroundColor: Colors.white,
                 child: CircleAvatar(
                   radius: 50,
-                  backgroundImage: profileData!['photo'] != null
-                      ? NetworkImage("$baseUrl/static/media/${profileData!['photo']}")
-                      : null,
-                  child: profileData!['photo'] == null
-                      ? const Icon(Icons.person, size: 50, color: Colors.grey)
-                      : null,
+                  backgroundImage: NetworkImage(profileData!['photo']),
                 ),
+              )
+                  : const Icon(
+                Icons.family_restroom,
+                size: 110, // adjust size to match the outer circle
+                color: Color(0xFF26A69A),
               ),
             ),
+
           ],
         ),
         const SizedBox(height: 60),
@@ -263,7 +265,7 @@ class ViewParentProfileTab extends StatelessWidget {
                 child: ElevatedButton.icon(
                   onPressed: () {
                     String pdfUrl =
-                        "$baseUrl/static/media/${profileData!['proof_pdf']}";
+                        profileData!['proof_pdf'];
                     Navigator.push(
                       context,
                       MaterialPageRoute(
